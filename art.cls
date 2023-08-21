@@ -691,6 +691,7 @@ x}
       boxsep=2mm,%
       toptitle=0.5mm,
       bottomtitle=0.5mm,%
+      boxrule=0pt%
       %
       ]
       {\absfont\bfseries\large Abstract}\\%
