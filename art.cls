@@ -156,6 +156,7 @@
 \g@addto@macro\bfseries{\boldmath}
 % Natural deduction proofs
 \RequirePackage{bussproofs}
+\RequirePackage{proof}
 
 % For listings
 \RequirePackage{minted}
