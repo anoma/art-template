@@ -374,7 +374,12 @@
 \renewcommand\@biblabel[1]{ #1.}
 
 % Footnotes
-\RequirePackage[flushmargin,ragged,symbol*]{footmisc}
+\RequirePackage[%
+    flushmargin        % This option makes footnotes align with the margin.
+  , ragged             % This option sets the footnote text to be left-aligned.
+  % , symbol*          % This option changes the symbols used for
+                       % footnotes. Instead of numbers, symbols like *, †, ‡, etc., will be used
+]{footmisc}
 \renewcommand*{\footnotelayout}{\footnotefont}
 \renewcommand{\footnoterule}{% Set the footnote hrule style
   \kern -3pt
