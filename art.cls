@@ -523,7 +523,7 @@ x}
       }}}%
       \vcenter{%  
         {\Large
-        \textit{\textbf{Anoma Research Topics}}} | \textsf{Technical Report}
+        \textit{\textbf{Anoma Research Topics}}} | \textsf{\arttype{}}
       }$ 
       % \hrule 
       }                            % article type  
