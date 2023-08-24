@@ -253,7 +253,8 @@
   makecell,                                   % multilined table cells
   tabularx,                                   % width-expanding column (with 'x')
   multirow,                                   % for multirow cells (with \\)
-  colortbl                                    % to add colours to table cells,
+  colortbl,                                   % to add colours to table cells,
+  xypic,                                      % for commutative diagrams
   % colortblarray,
   % array,                                      % for better column definitions 
 }
@@ -392,7 +393,7 @@
 \RequirePackage[
   colorlinks=true,
   allcolors=anoma,
-  pagebackref=false,
+  pagebackref=true,
 ]{hyperref}
 
 \PassOptionsToPackage{unicode}{hyperref}
