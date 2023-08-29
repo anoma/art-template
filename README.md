@@ -1,9 +1,24 @@
 # Anoma Research Topics LaTex Template
 
-This is a template for writing Anoma research topics in LaTeX.
+This is a template for writing  Anoma Research Topics, a.k.a ARTs in LaTeX.
 
 ## Latex template
-The latex template file is `main.tex`.
+
+To begin, clone the repository and modify the `main.tex` file.
+
+Once done, compile the LaTeX file using LaTeXMk in your terminal. Depending on
+whether you're using XeLatex or pdflatex, run the corresponding command:
+
+**For XeLatex:**
+```bash
+latexmk -pdf -shell-espace -xelatex main.tex
+```
+
+**For pdflatex:**
+```bash
+latexmk -pdf -shell-espace main.tex
+```
+This will generate a PDF version of your `.tex` file.
 
 ## Org template
 The org template file is `main-org.org`. In order to export the org file to
@@ -23,3 +38,9 @@ configuration:
 (setq org-latex-default-packages-alist nil)
 (setq org-latex-with-hyperref nil)
 ```
+
+## References
+
+The references are stored in the `ref.bib` file. We have included a few
+references as of other ARTs and related papers. Feel free to add your own
+references.
