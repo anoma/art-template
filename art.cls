@@ -128,13 +128,13 @@
 \declaretheoremstyle[
 	headfont=\normalfont\bfseries,
 	bodyfont=\normalfont\itshape,
-	headpunct={},
+	headpunct={.},
 ]{p-thm}
 
 \declaretheoremstyle[
 	headfont=\normalfont\bfseries,
 	bodyfont=\normalfont,
-	headpunct={},
+	headpunct={.},
 	spacebelow=\topsep,
 	spaceabove=\topsep,
 ]{p-example}
@@ -255,9 +255,15 @@
   multirow,                                   % for multirow cells (with \\)
   colortbl,                                   % to add colours to table cells,
   xypic,                                      % for commutative diagrams
-  % colortblarray,
-  % array,                                      % for better column definitions 
+  footnote                                    % support for footnotes inside tabular
 }
+
+% Support footnotes inside tabular. Inestable.
+% Better use \captionof{table}{..}
+\makesavenoteenv{tabular}
+\makesavenoteenv{tabularx}
+\makesavenoteenv{table}
+
 % booktabs provide nice spacing, but rule widths and distances need modifying
 \setlength{\heavyrulewidth}{0.5pt}            % wide rule
 \setlength{\lightrulewidth}{0.5pt}            % light rule
