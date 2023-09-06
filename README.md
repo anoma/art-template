@@ -1,6 +1,6 @@
 # Anoma Research Topics LaTex Template
 
-This is a template for writing  Anoma Research Topics, a.k.a ARTs in LaTeX.
+This is a template for writing Anoma Research Topics, a.k.a ARTs in LaTeX.
 
 ## Latex template
 
