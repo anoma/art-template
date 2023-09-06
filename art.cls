@@ -28,6 +28,8 @@
 % Option for type of article
 \newcommand{\arttype}{ARTICLE}
 \DeclareOption{techreport}{\renewcommand{\arttype}{TECHNICAL REPORT}}
+\DeclareOption{report}{\renewcommand{\arttype}{REPORT}}
+\DeclareOption{proposa}{\renewcommand{\arttype}{PROPOSAL}}
 \DeclareOption{commun}{\renewcommand{\arttype}{COMMUNICATION}}
 \DeclareOption{review}{\renewcommand{\arttype}{REVIEW}}
 \DeclareOption{persp}{\renewcommand{\arttype}{PERSPECTIVE}}
