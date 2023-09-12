@@ -144,8 +144,11 @@ class Record:
         info['title'] = self.get_title()
         info['authors'] = self.get_authors()
         info['date'] = self.get_date()
-        info["downloads/unique"] = (self.data['stats']['version_downloads'] , self.data['stats']['version_unique_downloads'])
+
+        info["downloads/unique"] = (self.data['stats']['version_downloads'] , 
+                                    self.data['stats']['version_unique_downloads'])
         info["views/unique"] = (self.data['stats']['version_views'] , self.data['stats']['version_unique_views'])
+
         info['doi/url'] = "[{}]({})".format(self.data['doi'], self.data['links']['html'])
         return info
         
@@ -238,17 +241,18 @@ if __name__ == "__main__":
     df = df.reindex(columns=[
             'title',
             # 'authors',
+            'doi/url',
+            'date',
             'views/unique',
             'downloads/unique',
-            'date',
-            'doi/url'
             ])
     df = df.sort_values(by=['downloads/unique'], ascending=False)
-    # change column names by capitalizing the first letter
+    df['date'] = pd.to_datetime(df['date'])
+    df['date'] = df['date'].dt.strftime('%b %d, %Y')
     df = df.rename(columns=lambda x: x.capitalize())
 
     mdTable = tabulate(df, headers='keys', tablefmt='pipe', showindex='never',
-                       floatfmt='.2f', numalign='center', stralign='center')
+                       floatfmt='.2f')
 
     with open('ARTIndex.md', 'w') as f:
         f.write("# ART Index :seedling:\n\n")
