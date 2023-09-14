@@ -145,9 +145,9 @@ class Record:
         info['authors'] = self.get_authors()
         info['date'] = self.get_date()
 
-        info["downloads/unique"] = (self.data['stats']['version_downloads'] , 
-                                    self.data['stats']['version_unique_downloads'])
-        info["views/unique"] = (self.data['stats']['version_views'] , self.data['stats']['version_unique_views'])
+        info["downloads/unique"] = ( int(self.data['stats']['version_downloads']), int(self.data['stats']['version_unique_downloads']))
+        
+        info["views/unique"] = (int(self.data['stats']['version_views']) , int(self.data['stats']['version_unique_views']))
 
         info['doi/url'] = "[{}]({})".format(self.data['doi'], self.data['links']['html'])
         return info
@@ -251,8 +251,7 @@ if __name__ == "__main__":
     df['date'] = df['date'].dt.strftime('%b %d, %Y')
     df = df.rename(columns=lambda x: x.capitalize())
 
-    mdTable = tabulate(df, headers='keys', tablefmt='pipe', showindex='never',
-                       floatfmt='.2f')
+    mdTable = tabulate(df, headers='keys', tablefmt='pipe', showindex='never')
 
     with open('ARTIndex.md', 'w') as f:
         f.write("# ART Index :seedling:\n\n")
