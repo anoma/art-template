@@ -11,14 +11,16 @@ whether you're using XeLatex or pdflatex, run the corresponding command:
 
 **For XeLatex:**
 ```bash
-latexmk -pdf -shell-espace -xelatex main.tex
+latexmk -pdf -shell-escape -xelatex main.tex
 ```
 
 **For pdflatex:**
 ```bash
-latexmk -pdf -shell-espace main.tex
+latexmk -pdf -shell-escape main.tex
 ```
-This will generate a PDF version of your `.tex` file.
+This will generate a PDF version of your `.tex` file. You may want to try the
+flag `-pvc` for incremental compilation. And if you don't have `latexmk` then
+replace `latexmk -pdf` by `pdflatex`.
 
 ## Org template
 The org template file is `main-org.org`. In order to export the org file to
