@@ -5,7 +5,7 @@
 %--------------------------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{art}[19/08/2023, v1.0]
+\ProvidesClass{art}[19/08/2023, v1.1]
 \RequirePackage{etoolbox}         % a necessity
 
 % Class options and conditionals
@@ -24,15 +24,31 @@
 \newtoggle{footpreprint}          % add a "Preprint" text in footer
 \toggletrue{footpreprint}         % on by default
 \newtoggle{debug}                 % debugging activated
+\newtoggle{history}               % information about the revision history
+\toggletrue{history}        
+\newtoggle{toc}                   % table of contents
+\togglefalse{toc}                  % on by default
+\newtoggle{conference}            % conference mode
+\togglefalse{conference}           % off by default
+
 
 % Option for type of article
 \newcommand{\arttype}{ARTICLE}
 \DeclareOption{techreport}{\renewcommand{\arttype}{TECHNICAL REPORT}}
-\DeclareOption{report}{\renewcommand{\arttype}{REPORT}}
-\DeclareOption{proposa}{\renewcommand{\arttype}{PROPOSAL}}
 \DeclareOption{commun}{\renewcommand{\arttype}{COMMUNICATION}}
 \DeclareOption{review}{\renewcommand{\arttype}{REVIEW}}
 \DeclareOption{persp}{\renewcommand{\arttype}{PERSPECTIVE}}
+\DeclareOption{nohistory}{\togglefalse{history}}
+\DeclareOption{toc}{\toggletrue{toc}}
+
+\DeclareOption{conference}{%
+%set fontize to 12pt
+\PassOptionsToClass{12pt}{extarticle}%
+\renewcommand{\arttype}{CONFERENCE ARTICLE}%
+\toggletrue{conference}%
+\togglefalse{history}%
+}
+
 
 % Option for switching to SI format
 \DeclareOption{SI}{\toggletrue{SI}}
@@ -41,12 +57,12 @@
 \DeclareOption{twocolumn}{
   \toggletrue{twocolumn}
   \PassOptionsToClass{twocolumn}{extarticle}
-}
-
-% Option for line numbers
-\DeclareOption{lineno}{\toggletrue{linenumbers}}
-
-% Option for footer
+  }
+  
+  % Option for line numbers
+  \DeclareOption{lineno}{\toggletrue{linenumbers}}
+  
+  % Option for footer
 \DeclareOption{nofootdate}{\togglefalse{footdate}}
 \DeclareOption{nofootprint}{\togglefalse{footpreprint}}
 
@@ -79,6 +95,7 @@
   }
 }{}
 
+
 % Fonts and language
 
 % Fonts
@@ -89,21 +106,37 @@
 \AtEndOfClass{\RequirePackage{microtype}}
 
 % Use \say command for quotation
-\usepackage{dirtytalk}
+\RequirePackage{dirtytalk}
+
 
 % for double-brackets
-\usepackage{stmaryrd}
+\RequirePackage{stmaryrd}
 
 %% Set up main page fonts
+\iftoggle{conference}{%
+\newcommand{\headerfont}{\fontfamily{lmss}\color{gray}\bfseries\sffamily\fontsize{14pt}{14pt}\selectfont}
+\newcommand{\footerfont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\titlefont}{\fontfamily{lmss}\bfseries\fontsize{20pt}{22pt}\selectfont}
+\newcommand{\subtitlefont}{\fontfamily{lmss}\bfseries\fontsize{15pt}{18pt}\selectfont}
+\newcommand{\artypefont}{\fontfamily{lmss}\bfseries\fontsize{7pt}{9pt}\selectfont}
+\newcommand{\contactfont}{\itshape\sffamily\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\absfont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\keywordsfont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\footnotefont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
+
+}{%
 \newcommand{\headerfont}{\fontfamily{lmss}\color{gray}\bfseries\sffamily\fontsize{16pt}{20pt}\selectfont}
 \newcommand{\footerfont}{\normalfont\sffamily\fontsize{7pt}{9pt}\selectfont}
 \newcommand{\titlefont}{\fontfamily{lmss}\bfseries\fontsize{22pt}{24pt}\selectfont}
 \newcommand{\subtitlefont}{\fontfamily{lmss}\bfseries\fontsize{15pt}{20pt}\selectfont}
 \newcommand{\artypefont}{\fontfamily{lmss}\bfseries\fontsize{7pt}{9pt}\selectfont}
 \newcommand{\contactfont}{\itshape\sffamily\fontsize{7pt}{9pt}\selectfont}
-\newcommand{\absfont}{\normalfont\sffamily\fontsize{8pt}{11pt}\selectfont}
+\newcommand{\absfont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\keywordsfont}{\normalfont\sffamily\fontsize{8pt}{11pt}\selectfont}
-\newcommand{\footnotefont}{\normalfont\sffamily\fontsize{7}{9}\selectfont}
+\newcommand{\footnotefont}{\normalfont\sffamily\fontsize{7pt}{9pt}\selectfont}
+
+}
+
 
 % AMS maths packages
 \RequirePackage{
@@ -231,9 +264,26 @@
 \RequirePackage{graphicx}                     % include pictures
 \RequirePackage{tikz}                         % drawing pictures
 \RequirePackage{templates/ART/quiver}     % drawing quiver diagrams
-\usetikzlibrary{svg.path}                     % TIKZ svg paths
-\usetikzlibrary{calc}                         % TIKZ calculations
+\usetikzlibrary{%
+svg.path,                     % TIKZ svg paths
+calc,                        % TIKZ calculations
+graphs,                      % TIKZ graphs
+trees,                       % TIKZ trees
+shapes.geometric,            % TIKZ geometric shapes
+arrows,                      % TIKZ arrows
+positioning,                 % TIKZ positioning
+backgrounds,                 % TIKZ backgrounds
+fit,                         % TIKZ fitting
+}
+
 \RequirePackage[framemethod=tikz]{mdframed}   % breakable framed and coloured boxes
+
+\iftoggle{conference}{%
+\tikzset{
+  every picture/.append style={transform shape, scale=0.8}
+}
+}{}
+
 
 %% Set document color scheme
 \RequirePackage{xcolor}                       % driver indepentent color extensions
@@ -258,13 +308,17 @@
   colortbl,                                   % to add colours to table cells,
   xypic,                                      % for commutative diagrams
   footnote                                    % support for footnotes inside tabular
+  % colortblarray,
+  % array,                                      % for better column definitions 
 }
 
-% Support footnotes inside tabular. Inestable.
-% Better use \captionof{table}{..}
+% Support footnotes inside tabular. No use table
+% instead, use \captionof{table}{..}
 \makesavenoteenv{tabular}
 \makesavenoteenv{tabularx}
 \makesavenoteenv{table}
+
+\RequirePackage{setspace} % to set different spacing in paragraphs
 
 % booktabs provide nice spacing, but rule widths and distances need modifying
 \setlength{\heavyrulewidth}{0.5pt}            % wide rule
@@ -304,12 +358,16 @@
 \RequirePackage[
   skip=3pt,                                   % vertical space between caption and figure
   labelfont={bf,sf},                          % we bold the caption label
-  labelsep=colon,                             % periods after label (Fig. 1:)
-  figurename=Fig.,                            % figure will be abbreviated
+  labelsep=period,                       % periods after label (Fig. 1:)
+  % figurename=Figire                            % figure will be abbreviated
   % tablename=Tbl.,                             % table will be abbreviated
 ]{caption}
 % overall font types (excluding label)
-\DeclareCaptionFormat{fmt}{\normalfont\sffamily\fontsize{7}{9}\selectfont#1#2#3}
+\iftoggle{conference}{%
+  \DeclareCaptionFormat{fmt}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont#1#2#3}
+}{
+  \DeclareCaptionFormat{fmt}{\normalfont\sffamily\fontsize{8pt}{10pt}\selectfont#1#2#3}
+}
 \captionsetup*{format=fmt}                        % for figures
 \captionsetup*[table]{format=fmt,position=above}  % for tables
 
@@ -391,6 +449,9 @@
   \kern 2.5pt
 }
 
+
+\RequirePackage{hyphenat} % break long verbatim text
+
 % References and bookmarks
 
 % Xr:
@@ -439,6 +500,35 @@
 \RequirePackage{doi} % DOIs
 \RequirePackage[nottoc]{tocbibind} % References section in TOC (for SI)
 
+% Nice typesetting of codeblocks
+\RequirePackage{fontspec}
+\iftoggle{conference}{
+  \setmonofont{JetBrains Mono}[ Scale=0.75 ]
+}{
+  \setmonofont{JetBrains Mono}[ Scale=0.85 ]
+}
+
+\definecolor{light-gray}{gray}{0.95}
+\lstset{columns=fullflexible,%
+basicstyle=\ttfamily\footnotesize,%
+backgroundcolor=\color{light-gray},%
+xleftmargin=0.5cm,%
+frame=tlbr,%
+framesep=4pt,%
+framerule=0pt%
+}
+\usemintedstyle{trac}
+\newminted[betterpython]{python}{%
+linenos=false,%
+breaklines,%
+autogobble,%
+frame=leftline,%
+framerule=0.5pt,%
+framesep=2em,
+tabsize=2
+}
+
+
 %
 % Other Setup
 
@@ -472,7 +562,13 @@ x}
 
 %% Article meta data additional fields
 \newcommand{\pubdoi}[1]{\def\@pubdoi{#1}}
-\newcommand{\history}[1]{\def\@history{#1}}                         % publication DOI
+
+\iftoggle{history}{%
+\newcommand{\history}[1]{\def\@history{#1}}%
+}{%
+\newcommand{\history}[1]{}%
+}
+
 \newcommand{\keywords}[1]{\def\@keywords{#1}}                 % keywords
 \newcommand{\sep}[0]{; }                                      % keyword separator
 \newcommand{\contact}[1]{\def\@contact{#1}}                   % contact author
@@ -508,7 +604,7 @@ x}
     \footerfont\textit{Supplementary Information}\hspace{7pt}|%         % we add SI as text
   }{
     \iftoggle{footpreprint}{
-      \footerfont\textit{Anoma Research Topics}\hspace{7pt}|%                        % we add preprint text
+      \footerfont\href{http://art.anoma.net}{Anoma Research Topics}\hspace{7pt}|%                        % we add preprint text
     }{}
   }
   \iftoggle{footdate}{
@@ -532,7 +628,7 @@ x}
       }}}%
       \vcenter{%  
         {\Large
-        \textit{\textbf{Anoma Research Topics}}} | \textsf{\arttype{}}
+        \href{https://art.anoma.net}{Anoma Research Topics}} | \textsf{\arttype{}}
       }$ 
       % \hrule 
       }                            % article type  
@@ -748,6 +844,9 @@ x}
   {\centering\contactswitch{}}
   %
   \vspace*{\fill}%
+  \iftoggle{toc}{%
+  \tableofcontents
+  }{}
 }
 {% else if complete paper
   %
@@ -771,6 +870,9 @@ x}
   \abstractBox{\abscontent{}}{absshadecolor}}
   \noindent % This is to remove indentation of minipage
   \vskip5pt%
+  \iftoggle{toc}{%
+  \tableofcontents
+  }{}
 }%
 \noindent
 \@ifundefined{@history}{}{%
