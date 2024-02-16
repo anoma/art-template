@@ -98,9 +98,46 @@
 
 % Fonts and language
 
-% Fonts
-\RequirePackage{lmodern} % TODO check for Libertinus
-\renewcommand*\familydefault{\sfdefault}
+\RequirePackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\RequirePackage{cmap}
+\RequirePackage[TS1,T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\else % if luatex or xelatex
+\ifxetex
+    
+   \usepackage{sansmathfonts}
+   \usepackage{amssymb,amsmath}
+    \usepackage{mathrsfs}
+    \usepackage[T1]{fontenc}%
+    \usepackage[utf8]{inputenc}
+    \renewcommand*\familydefault{\sfdefault}
+    \usepackage{sansmathfonts}
+
+
+    % \usepackage[euler]{fontsetup}
+    % \usepackage[concrete]{fontsetup}
+    % \usepackage[libertinus]{fontsetup}
+    % \usepackage[kerkis]{fontsetup}
+    % \usepackage[gfsdidot]{fontsetup}
+  \else
+    \usepackage{fontspec}
+  \fi
+  %\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+
+% Language
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\RequirePackage[english]{babel}
+\else
+\usepackage{polyglossia}
+\setmainlanguage[]{english}
+\iftoggle{conference}{
+\setmonofont{JetBrains Mono}[ Scale= 0.65]
+}{\setmonofont{JetBrains Mono}[ Scale=0.85 ]}
+\fi
+
+
 
 % Microtype
 \AtEndOfClass{\RequirePackage{microtype}}
@@ -108,42 +145,39 @@
 % Use \say command for quotation
 \RequirePackage{dirtytalk}
 
-
 % for double-brackets
 \RequirePackage{stmaryrd}
 
 %% Set up main page fonts
 \iftoggle{conference}{%
-\newcommand{\headerfont}{\fontfamily{lmss}\color{gray}\bfseries\sffamily\fontsize{14pt}{14pt}\selectfont}
-\newcommand{\footerfont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
-\newcommand{\titlefont}{\fontfamily{lmss}\bfseries\fontsize{20pt}{22pt}\selectfont}
-\newcommand{\subtitlefont}{\fontfamily{lmss}\bfseries\fontsize{15pt}{18pt}\selectfont}
-\newcommand{\artypefont}{\fontfamily{lmss}\bfseries\fontsize{7pt}{9pt}\selectfont}
-\newcommand{\contactfont}{\itshape\sffamily\fontsize{10pt}{11pt}\selectfont}
-\newcommand{\absfont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
-\newcommand{\keywordsfont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
-\newcommand{\footnotefont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\headerfont}{\color{gray}\bfseries\fontsize{14pt}{14pt}\selectfont}
+\newcommand{\footerfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\titlefont}{\bfseries\fontsize{20pt}{22pt}\selectfont}
+\newcommand{\subtitlefont}{\bfseries\fontsize{15pt}{18pt}\selectfont}
+\newcommand{\artypefont}{\bfseries\fontsize{7pt}{9pt}\selectfont}
+\newcommand{\contactfont}{\itshape\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\absfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\keywordsfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\footnotefont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 
 }{%
-\newcommand{\headerfont}{\fontfamily{lmss}\color{gray}\bfseries\sffamily\fontsize{16pt}{20pt}\selectfont}
-\newcommand{\footerfont}{\normalfont\sffamily\fontsize{7pt}{9pt}\selectfont}
-\newcommand{\titlefont}{\fontfamily{lmss}\bfseries\fontsize{22pt}{24pt}\selectfont}
-\newcommand{\subtitlefont}{\fontfamily{lmss}\bfseries\fontsize{15pt}{20pt}\selectfont}
-\newcommand{\artypefont}{\fontfamily{lmss}\bfseries\fontsize{7pt}{9pt}\selectfont}
-\newcommand{\contactfont}{\itshape\sffamily\fontsize{7pt}{9pt}\selectfont}
-\newcommand{\absfont}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont}
-\newcommand{\keywordsfont}{\normalfont\sffamily\fontsize{8pt}{11pt}\selectfont}
-\newcommand{\footnotefont}{\normalfont\sffamily\fontsize{7pt}{9pt}\selectfont}
-
+\newcommand{\headerfont}{\color{gray}\bfseries\fontsize{16pt}{20pt}\selectfont}
+\newcommand{\footerfont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
+\newcommand{\titlefont}{\bfseries\fontsize{22pt}{24pt}\selectfont}
+\newcommand{\subtitlefont}{\bfseries\fontsize{15pt}{20pt}\selectfont}
+\newcommand{\artypefont}{\bfseries\fontsize{7pt}{9pt}\selectfont}
+\newcommand{\contactfont}{\itshape\fontsize{7pt}{9pt}\selectfont}
+\newcommand{\absfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
+\newcommand{\keywordsfont}{\normalfont\fontsize{8pt}{11pt}\selectfont}
+\newcommand{\footnotefont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
 }
-
 
 % AMS maths packages
 \RequirePackage{
   amsmath,
   amsfonts,
   amsthm,
-  amssymb
+  % amssymb
 }
 \allowdisplaybreaks
 
@@ -196,31 +230,6 @@
 % For listings
 \RequirePackage{minted}
 
-% Encodings
-\RequirePackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \RequirePackage{cmap}
-  \RequirePackage[TS1,T1]{fontenc}
-  \RequirePackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-    % undo the wrong changes made by mathspec
-    \let\RequirePackage\original@RequirePackage
-    \let\usepackage\RequirePackage
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-\fi
-
-% Language
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \RequirePackage[english]{babel}
-\else
-  \usepackage{polyglossia}
-  \setmainlanguage[]{english}
-\fi
 
 % General pagination setup and tools
 
@@ -306,7 +315,7 @@ fit,                         % TIKZ fitting
   tabularx,                                   % width-expanding column (with 'x')
   multirow,                                   % for multirow cells (with \\)
   colortbl,                                   % to add colours to table cells,
-  xypic,                                      % for commutative diagrams
+  %xypic,                                      % for commutative diagrams
   footnote                                    % support for footnotes inside tabular
   % colortblarray,
   % array,                                      % for better column definitions 
@@ -332,7 +341,7 @@ fit,                         % TIKZ fitting
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 
 \AtBeginEnvironment{tabular}{%                % font inside tables will be small
-  \sffamily\fontsize{7.5}{10}\selectfont
+  \fontsize{7.5}{10}\selectfont
 }
 %% command we can use to add some text e.g. below the table
 \newcommand{\addtabletext}[1]{{\setlength{\leftskip}{9pt}\fontsize{7}{9}\selectfont#1}}
@@ -364,9 +373,9 @@ fit,                         % TIKZ fitting
 ]{caption}
 % overall font types (excluding label)
 \iftoggle{conference}{%
-  \DeclareCaptionFormat{fmt}{\normalfont\sffamily\fontsize{10pt}{11pt}\selectfont#1#2#3}
+  \DeclareCaptionFormat{fmt}{\normalfont\fontsize{10pt}{11pt}\selectfont#1#2#3}
 }{
-  \DeclareCaptionFormat{fmt}{\normalfont\sffamily\fontsize{8pt}{10pt}\selectfont#1#2#3}
+  \DeclareCaptionFormat{fmt}{\normalfont\fontsize{8pt}{10pt}\selectfont#1#2#3}
 }
 \captionsetup*{format=fmt}                        % for figures
 \captionsetup*[table]{format=fmt,position=above}  % for tables
@@ -425,7 +434,8 @@ fit,                         % TIKZ fitting
 \setlength{\bibsep}{0.0pt}
 \bibliographystyle{unsrtnat}
 %% set Bibliography font
-\renewcommand\bibfont{\normalfont\sffamily\fontsize{6}{8}\selectfont}
+\renewcommand\bibfont{\normalfont\fontsize{10}{11}\selectfont}
+
 %% Use "References" as bibliography title
 \renewcommand{\bibname}{References}
 \renewcommand{\refname}{References}
@@ -481,7 +491,7 @@ fit,                         % TIKZ fitting
 % https://tex.stackexchange.com/questions/183702/formatting-back-references-in-bibliography-bibtex
 
 %% Set URL link color & font
-\renewcommand\UrlFont{\color{anoma}\sffamily}
+\renewcommand\UrlFont{\color{anoma}}
 
 % References
 \RequirePackage[
@@ -501,12 +511,8 @@ fit,                         % TIKZ fitting
 \RequirePackage[nottoc]{tocbibind} % References section in TOC (for SI)
 
 % Nice typesetting of codeblocks
-\RequirePackage{fontspec}
-\iftoggle{conference}{
-  \setmonofont{JetBrains Mono}[ Scale=0.75 ]
-}{
-  \setmonofont{JetBrains Mono}[ Scale=0.85 ]
-}
+
+
 
 \definecolor{light-gray}{gray}{0.95}
 \lstset{columns=fullflexible,%
@@ -542,7 +548,7 @@ tabsize=2
 % Typesetting for authors/affiliations
 \RequirePackage{authblk}
 \setlength{\affilsep}{8.5pt} % 16.5pts between base of author line and base of affil line
-\renewcommand\Authfont{\color{color0}\normalfont\sffamily\bfseries\fontsize{9}{11}\selectfont}
+\renewcommand\Authfont{\color{color0}\normalfont\bfseries\fontsize{9}{11}\selectfont}
 \renewcommand\Affilfont{\color{color0}\footnotefont}
 \renewcommand\AB@affilsepx{\newline\protect\Affilfont}
 \renewcommand\Authands{, and }
@@ -661,7 +667,7 @@ x}
     }{
     \RequirePackage{lineno}
   }
-  \renewcommand\linenumberfont{\normalfont\tiny\sffamily}
+  \renewcommand\linenumberfont{\normalfont\tiny}
   \linenumbers
 }{}
 
@@ -672,31 +678,31 @@ x}
 \setcounter{secnumdepth}{5}
 
 \titleformat{\section}
-  {\large\sffamily\bfseries}
+  {\large\bfseries}
   {\thesection.}
   {0.5em}
   {#1}
   []
 \titleformat{name=\section,numberless}
-  {\large\sffamily\bfseries}
+  {\large\bfseries}
   {}
   {0em}
   {#1}
   []  
 \titleformat{\subsection}[runin]
-  {\sffamily\bfseries}
+  {\bfseries}
   {\thesubsection.}
   {0.5em}
   {#1. }
   []
 \titleformat{\subsubsection}[runin]
-  {\sffamily\bfseries}
+  {\bfseries}
   {\thesubsubsection.}
   {0.5em}
   {#1. }
   []
 \titleformat{\paragraph}[runin]
-  {\sffamily\small\bfseries}
+  {\small\bfseries}
   {}
   {0em}
   {#1}
