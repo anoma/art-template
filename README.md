@@ -9,27 +9,37 @@ This is a template for writing Anoma Research Topics, a.k.a ARTs in LaTeX.
 ## Latex template
 
 To begin, clone the repository and modify the `main.tex` file.
+You may include `md.tex` and `.org.tex` files
+which are generated using pandoc from their `.md` and `.org` counterparts.
 
-Once done, compile the LaTeX file using LaTeXMk in your terminal. Depending on
-whether you're using XeLatex or pdflatex, run the corresponding command:
+Once done, build the PDF file:
 
-**For XeLatex:**
-```bash
-latexmk -pdf -shell-escape -xelatex main.tex
+```
+make
 ```
 
-**For pdflatex:**
-```bash
-latexmk -pdf -shell-escape main.tex
+This will generate `.md.tex` and `.org.tex` files using pandoc,
+and a `main.pdf` file using LaTeXMk and XeLaTeX.
+
+In case you don't have LaTeXMk installed, or wish to use pdflatex instead of XeLaTeX,
+change the `MKPDF` variable defined in the `Makefile`.
+
+To continously rebuild `main.pdf` when a source file changes, run:
+
 ```
-This will generate a PDF version of your `.tex` file. You may want to try the
-flag `-pvc` for incremental compilation. And if you don't have `latexmk` then
-replace `latexmk -pdf` by `pdflatex`.
+make watch
+```
+
+Then open the PDF file with a viewer that reloads the file on change.
 
 ## Org template
-The org template file is `main-org.org`. In order to export the org file to
-latex properly, you will need to include the following code into your emacs
-configuration:
+
+It is recommended to build `.org` files using pandoc as described above.
+Here is an alternative build process using emacs.
+
+The org template file is `main-org.org`,
+In order to export the org file to latex properly,
+you will need to include the following code into your emacs configuration:
 
 <pre>
 (with-eval-after-load 'ox-latex

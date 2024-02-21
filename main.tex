@@ -15,22 +15,27 @@
 \input{metadata.tex}
 \input{macros.tex}
 
+\let\autocite=\cite
+
 \begin{document}
 
 \maketitle
 
 \tableofcontents
 
-\section{Introduction}
+\input{intro.md.tex}
 
-\section{Concluding remarks}
+\input{related.md.tex}
 
-\section{Acknowledgements}
+\input{conclusion.md.tex}
+
+\input{ack.org.tex}
+
 \nocite{*}
 \bibliography{ref.bib}
 
 \appendix
-\section{Some extra stuff}
 
+\input{appendix.tex}
 
 \end{document}
