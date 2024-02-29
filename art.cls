@@ -125,7 +125,7 @@
 
 \usepackage{iftex}
 \ifPDFTeX
-  \RequirePackage[TS1,T1]{fontenc}
+  \RequirePackage[LGR,TS1,T1]{fontenc}
   \RequirePackage[utf8]{inputenc}
   \RequirePackage{cmap}
   \RequirePackage{textcomp}
