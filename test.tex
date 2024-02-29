@@ -35,10 +35,27 @@ Equation~\ref{eq-oneequation}, shown as an inline equation above:
 }\label{eq-oneequation}\end{equation}
 
 Notice how it is formatted somewhat differently in the
-\textbf{displaymath} environment. Now, we'll enter an unnumbered
+\texttt{displaymath} environment. Now, we'll enter an unnumbered
 equation:
 
 \[\sum_{i=0}^{\infty} x + 1\]
+
+Note some fine points concerning \texttt{mathit} and
+how math and text fonts are different sometimes.
+
+\begin{center}
+  \begin{tabular}[c]{|l|l|l|}
+    just math & $brown~fox$ \\
+    \texttt{mathit} & $\mathit{brown~fox}$ \\
+    \texttt{textit} & $\textit{brown~fox}$ \\
+    \texttt{textbf}& \textbf{brown~fox} \\
+    \texttt{mathbf}& $\mathbf{brown~fox}$ \\
+    \texttt{mathrm}& $\mathrm{brown~fox}$ \\
+    \texttt{textrm}& \textrm{brown~fox} \\
+    \texttt{boldsymbol}& $\boldsymbol{brown~fox}$ & $\boldsymbol{\partial\times\sum_i}$\\
+    just math && $\partial\times\sum_i$ \\
+  \end{tabular}
+\end{center}
 
 
 \section{Math Tests}
