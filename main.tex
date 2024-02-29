@@ -10,23 +10,19 @@
     % nofootdate,     % do not add date in footer
     % debug,          % switch, add debugging boxes
     % draft,          % for quick compilations (no figures, references etc)
+    % nobibstyle,     % do not set \bibliographystyle
 ]{art}
 
 \input{metadata.tex}
 \input{macros.tex}
 %\input{pandoc.tex} % needed for pandoc-generated files
 
-%\bibliographystyle{unsrtnat}
-\bibliographystyle{alpha}
-%\bibliographystyle{apalike}
-%\bibliographystyle{ACM-Reference-Format}
-
 \begin{document}
 \maketitle
 
-\tableofcontents
+%\tableofcontents
 
-%\input{test.tex} % disable twocolumn for tests
+\input{test.tex}
 
 \section{Introduction}
 

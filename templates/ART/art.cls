@@ -27,10 +27,13 @@
 \newtoggle{history}               % information about the revision history
 \toggletrue{history}
 \newtoggle{toc}                   % table of contents
-\togglefalse{toc}                  % on by default
+\togglefalse{toc}                 % off by default
 \newtoggle{conference}            % conference mode
-\togglefalse{conference}           % off by default
-
+\togglefalse{conference}          % off by default
+\newtoggle{bibconfig}             % no bibliography config
+\toggletrue{bibconfig}            % on by default
+\newtoggle{bibstyle}              % no bibliography style
+\toggletrue{bibstyle}             % on by default
 
 % Option for type of article
 \newcommand{\arttype}{ARTICLE}
@@ -59,10 +62,10 @@
   \PassOptionsToClass{twocolumn}{extarticle}
   }
 
-  % Option for line numbers
-  \DeclareOption{lineno}{\toggletrue{linenumbers}}
+% Option for line numbers
+\DeclareOption{lineno}{\toggletrue{linenumbers}}
 
-  % Option for footer
+% Option for footer
 \DeclareOption{nofootdate}{\togglefalse{footdate}}
 \DeclareOption{nofootprint}{\togglefalse{footpreprint}}
 
@@ -71,6 +74,9 @@
 
 % Option for toc image
 \DeclareOption{tocfig}{\toggletrue{tocfig}}
+
+\DeclareOption{nobibconfig}{\togglefalse{bibconfig}}
+\DeclareOption{nobibstyle}{\togglefalse{bibstyle}}
 
 % Option for debugging format
 \DeclareOption{debug}{\toggletrue{debug}}
@@ -411,16 +417,24 @@ fit,                         % TIKZ fitting
 
 % Bibliography, footnotes and their settings
 
+\iftoggle{bibconfig}{
 % Natbib package for text references
 \RequirePackage[
     numbers,                % numbers as references
     merge,                  % merge multiple references in one
     % super,                  % superscript
     %sort&compress,
-    %round,                  % parentheses around year
-    %semicolon,              % separate references with semicolon
+    %round,                 % parentheses around year
+    %semicolon,             % separate references with semicolon
     %nonamebreak,           % keep authors on the same line
 ]{natbib}
+
+\iftoggle{bibstyle}{
+%\bibliographystyle{unsrtnat}
+\bibliographystyle{alpha}
+%\bibliographystyle{apalike}
+%\bibliographystyle{ACM-Reference-Format}
+}{}
 
 % Moves references after punctuation
 \RequirePackage{natmove}
@@ -441,6 +455,8 @@ fit,                         % TIKZ fitting
 }
 %% Remove brackets from label
 \renewcommand\@biblabel[1]{ #1.}
+
+}{} % bibconfig
 
 % Footnotes
 \RequirePackage[%
