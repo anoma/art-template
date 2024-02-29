@@ -148,8 +148,11 @@
 \RequirePackage[libertine,amsthm]{newtx}
 
 \RequirePackage[varqu]{zi4} % inconsolata
-\ifPDFTeX\else
-  \setmonofont{inconsolata}[Scale=\monofontscale]
+\ifPDFTeX%RequirePackage[scaled=.78]{beramono}
+  %\RequirePackage[scaled=.83]{cascadia-code}
+  \RequirePackage[scaled=.825]{GoMono}
+\else
+  \setmonofont[Scale=MatchLowercase]{inconsolata}
 \fi
 
 \RequirePackage{mathrsfs}

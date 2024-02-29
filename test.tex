@@ -94,14 +94,18 @@ $$
 
 Note: If $\beta \in \Gamma$, then the form is undefined at the points in $S \cap \Gamma$, and the integral $l_l\left(i_1\right)$ diverges as $\varepsilon \rightarrow 0$. This pathological behavior can be handled by taking $\Gamma \subseteq S$.
 
+
+{
+  \small
 \begin{minted}{python}
-    def even_constraint(last_state, next_state_var, solver):
-        n = solver.IntVar(0, solver.infinity(), 'n_even')
-        b = solver.BoolVar('b_even')
-        solver.Add(next_state_var - 2 * n <= M * (1 - b))
-        solver.Add(next_state_var - 2 * n >= -M * (1 - b))
-        return [(b, 1)]
+def even_constraint(last_state, next_state_var, solver):
+    n = solver.IntVar(0, solver.infinity(), 'n_even')
+    b = solver.BoolVar('b_even')
+    solver.Add(next_state_var - 2 * n <= M * (1 - b))
+    solver.Add(next_state_var - 2 * n >= -M * (1 - b))
+    return [(b, 1)]
 \end{minted}
+}
 
 \begin{comment}
 
@@ -138,7 +142,7 @@ Graph three coloring is a common example used to introduce CSPs to new audiences
 The CSP itself consists of a single binary relation asserting the inequality between three elements, typically named after primary colors.
 
 \begin{equation}\label{equation:three-color-neq-def}
-    \neq\ = \{ (\mathit{Blue}, \mathit{Red}), (\mathit{Blue}, \mathit{Green}), (\mathit{Red}, \mathit{Blue}), (\mathit{Red}, \mathit{Green}), (\mathit{Green}, \mathit{Blue}), (\mathit{Green}, \mathit{Red}) \}
+  \scriptscriptstyle \neq\ = \{ (\mathit{Blue}, \mathit{Red}), (\mathit{Blue}, \mathit{Green}), (\mathit{Red}, \mathit{Blue}), (\mathit{Red}, \mathit{Green}), (\mathit{Green}, \mathit{Blue}), (\mathit{Green}, \mathit{Red}) \}
 \end{equation}
 
 Graphs become instances by translating edges into binary relations. Take this graph as an example;
@@ -169,7 +173,7 @@ We can simply list the edges using the inequality relation to produce the corres
 A solution to the graph coloring problem is then an assignment of colors that satisfies the instance. 
 
 
-\begin{table}[!h]
+\begin{table*}[!h]
 \begin{center}
 \begin{tabular}{|p{1.5cm}|p{13cm}|}
 \hline
@@ -188,7 +192,7 @@ Receiver & owns the created resource
 \end{tabular}
 \caption{Resource-related roles.}
 \end{center}
-\end{table}
+\end{table*}
 
 
 If we think about the structure of this graph, we notice that it has three triangles, the left and right side triangles $(x_1, x_2, x_4)$  and $(x_2, x_3, x_5)$, and the central triangle $(x_2, x_4, x_5)$. Each must be a triple of distinctly colored points. The edge between $x_4$ and $x_5$ forces those two to have distinct colors, while the two side triangles share a color at $x_2$. These two observations force us to conclude that the left triangle has the colors of the right triangle flipped along the bisector going through $x_2$. If we arbitrarily select $x_1$ to be $\mathit{Blue}$ and $x_2$ to be $\mathit{Red}$, we are then forced into the coloring;
