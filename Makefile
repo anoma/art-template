@@ -7,14 +7,13 @@ ORG := $(shell git ls-files | grep '\.org$$')
 MD_TEX := $(patsubst %.md,%.md.tex,$(MD))
 ORG_TEX := $(patsubst %.org,%.org.tex,$(ORG))
 
-OUT?=output
+OUT ?= output
 
-LATEXMK?=latexmk
-LATEXMK_TEXENGINE?=xelatex
-LATEXMK_OPTS?=-pdf -shell-escape -$(LATEXMK_TEXENGINE) -output-directory=$(OUT)
+LATEXMK ?= latexmk
+LATEXMK_TEXENGINE ?= xelatex
+LATEXMK_OPTS ?= -pdf -shell-escape -$(LATEXMK_TEXENGINE) -output-directory=$(OUT)
 
-# latexmk with xelatex
-MKPDF?=$(LATEXMK) $(LATEXMK_OPTS)
+MKPDF ?= $(LATEXMK) $(LATEXMK_OPTS)
 
 .PHONY: xelatex
 xelatex: LATEXMK_TEXENGINE:=xelatex
@@ -26,12 +25,12 @@ lualatex: main.pdf
 
 .PHONY: pdflatex
 pdflatex: LATEXMK_TEXENGINE:=pdflatex
-pdflatex:
+pdflatex: main.pdf
 	@echo "We recommend using xelatex or lualatex instead of pdflatex."
 
-pdf: xelatex
-
 all: pdf
+
+pdf: xelatex
 
 watch: main.pdf
 	while inotifywait -qe modify $(TEX) $(CLS) $(STY) $(MD) $(ORG); do make main.pdf; done
