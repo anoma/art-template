@@ -412,13 +412,13 @@ fit,                         % TIKZ fitting
 
 % Natbib package for text references
 \RequirePackage[
-    % numbers,                % numbers as references
+    numbers,                % numbers as references
     merge,                  % merge multiple references in one
     % super,                  % superscript
-    sort&compress,
-    round,                  % parentheses around year
-    semicolon,              % separate references with semicolon
-    nonamebreak,           % keep authors on the same line
+    %sort&compress,
+    %round,                  % parentheses around year
+    %semicolon,              % separate references with semicolon
+    %nonamebreak,           % keep authors on the same line
 ]{natbib}
 
 % Moves references after punctuation
@@ -428,7 +428,8 @@ fit,                         % TIKZ fitting
 % Bibliography style
 %% No separation between references
 \setlength{\bibsep}{0.0pt}
-\bibliographystyle{unsrtnat}
+\bibliographystyle{ACM-Reference-Format}
+
 %% set Bibliography font
 \renewcommand\bibfont{\normalfont\fontsize{10}{11}\selectfont}
 
