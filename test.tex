@@ -43,7 +43,7 @@ Note some fine points concerning \texttt{mathit} and
 how math and text fonts are different sometimes.
 
 \begin{center}
-  \begin{tabular}[c]{|l|l|l|}
+  \begin{tabular}[c]{|l|l|l|l|}
     just math & $brown~fox$ \\
     \texttt{mathit} & $\mathit{brown~fox}$ \\
     \texttt{textit} & $\textit{brown~fox}$ \\
@@ -52,7 +52,9 @@ how math and text fonts are different sometimes.
     \texttt{mathrm}& $\mathrm{brown~fox}$ \\
     \texttt{textrm}& \textrm{brown~fox} \\
     \texttt{boldsymbol}& $\boldsymbol{brown~fox}$ & $\boldsymbol{\partial\times\sum_i}$\\
-    just math && $\partial\times\sum_i$ \\
+              && $\partial\times\sum_i$&just math \\
+    text mono spaced& s\texttt{st}t &\\
+    math mono spaced& $\mathrm{s}\mathtt{st}\mathrm{t}$&
   \end{tabular}
 \end{center}
 
@@ -92,8 +94,17 @@ $$
 
 Note: If $\beta \in \Gamma$, then the form is undefined at the points in $S \cap \Gamma$, and the integral $l_l\left(i_1\right)$ diverges as $\varepsilon \rightarrow 0$. This pathological behavior can be handled by taking $\Gamma \subseteq S$.
 
+\begin{minted}{python}
+    def even_constraint(last_state, next_state_var, solver):
+        n = solver.IntVar(0, solver.infinity(), 'n_even')
+        b = solver.BoolVar('b_even')
+        solver.Add(next_state_var - 2 * n <= M * (1 - b))
+        solver.Add(next_state_var - 2 * n >= -M * (1 - b))
+        return [(b, 1)]
+\end{minted}
+
 \begin{comment}
-    
+
 \begin{betterpython}
     def even_constraint(last_state, next_state_var, solver):
         n = solver.IntVar(0, solver.infinity(), 'n_even')
