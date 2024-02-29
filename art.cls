@@ -429,7 +429,6 @@ fit,                         % TIKZ fitting
 % Bibliography style
 %% No separation between references
 \setlength{\bibsep}{0.0pt}
-\bibliographystyle{ACM-Reference-Format}
 
 %% set Bibliography font
 \renewcommand\bibfont{\normalfont\fontsize{10}{11}\selectfont}
