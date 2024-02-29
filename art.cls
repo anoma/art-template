@@ -109,7 +109,7 @@
 \newcommand{\absfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\keywordsfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\footnotefont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
-\newcommand{\monofontscale}{0.65}
+\newcommand{\monofontscale}{0.94}
 }{%
 \newcommand{\headerfont}{\color{gray}\bfseries\fontsize{16pt}{20pt}\selectfont}
 \newcommand{\footerfont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
@@ -120,7 +120,7 @@
 \newcommand{\absfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\keywordsfont}{\normalfont\fontsize{8pt}{11pt}\selectfont}
 \newcommand{\footnotefont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
-\newcommand{\monofontscale}{0.85}
+\newcommand{\monofontscale}{0.94}
 }
 
 \usepackage{iftex}
@@ -147,10 +147,11 @@
 
 \RequirePackage[libertine,amsthm]{newtx}
 
-\RequirePackage[varqu]{zi4} % inconsolata
-\ifPDFTeX%RequirePackage[scaled=.78]{beramono}
+\RequirePackage[varqu,scaled=\monofontscale]{zi4} % inconsolata
+\ifPDFTeX
+  %\RequirePackage[scaled=.78]{beramono}
   %\RequirePackage[scaled=.83]{cascadia-code}
-  \RequirePackage[scaled=.825]{GoMono}
+  %\RequirePackage[scaled=.825]{GoMono}
 \else
   \setmonofont[Scale=MatchLowercase]{inconsolata}
 \fi
