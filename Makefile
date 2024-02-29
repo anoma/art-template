@@ -17,25 +17,27 @@ MKPDF ?= $(LATEXMK) $(LATEXMK_OPTS)
 
 .PHONY: xelatex
 xelatex: LATEXMK_TEXENGINE:=xelatex
-xelatex: main.pdf
+xelatex: main
 
 .PHONY: lualatex
 lualatex: LATEXMK_TEXENGINE:=lualatex
-lualatex: main.pdf
+lualatex: main
 
 .PHONY: pdflatex
 pdflatex: LATEXMK_TEXENGINE:=pdflatex
-pdflatex: main.pdf
+pdflatex: main
 	@echo "We recommend using xelatex or lualatex instead of pdflatex."
 
 all: pdf
 
 pdf: xelatex
 
-watch: main.pdf
-	while inotifywait -qe modify $(TEX) $(CLS) $(STY) $(MD) $(ORG); do make main.pdf; done
+watch: main
+	while inotifywait -qe modify $(TEX) $(CLS) $(STY) $(MD) $(ORG); do make main; done
 
-main.pdf: main.tex $(TEX) $(CLS) $(STY) $(MD_TEX) $(ORG_TEX)
+main: $(OUT)/main.pdf
+
+$(OUT)/main.pdf: main.tex $(TEX) $(CLS) $(STY) $(MD_TEX) $(ORG_TEX)
 	$(MKPDF) $(MKPDF_OPTS) $<
 
 %.md.tex: %.md
