@@ -133,7 +133,7 @@
   % \usepackage[euler]{fontsetup}
   % \usepackage[concrete]{fontsetup}
   % \usepackage[libertinus]{fontsetup}
-  % t\usepackage[kerkis]{fontsetup}
+  % \usepackage[kerkis]{fontsetup}
   % \usepackage[gfsdidot]{fontsetup}
 
   % \usepackage{sansmathfonts}
@@ -145,10 +145,7 @@
   % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
 
-\RequirePackage{amsmath,amsthm}
-
-\RequirePackage[tt=false]{libertine}
-\RequirePackage[libertine]{newtxmath}
+\RequirePackage[libertine,amsthm]{newtx}
 
 \RequirePackage[varqu]{zi4} % inconsolata
 \ifPDFTeX\else
