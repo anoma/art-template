@@ -25,7 +25,7 @@
 \toggletrue{footpreprint}         % on by default
 \newtoggle{debug}                 % debugging activated
 \newtoggle{history}               % information about the revision history
-\toggletrue{history}        
+\toggletrue{history}
 \newtoggle{toc}                   % table of contents
 \togglefalse{toc}                  % on by default
 \newtoggle{conference}            % conference mode
@@ -58,10 +58,10 @@
   \toggletrue{twocolumn}
   \PassOptionsToClass{twocolumn}{extarticle}
   }
-  
+
   % Option for line numbers
   \DeclareOption{lineno}{\toggletrue{linenumbers}}
-  
+
   % Option for footer
 \DeclareOption{nofootdate}{\togglefalse{footdate}}
 \DeclareOption{nofootprint}{\togglefalse{footpreprint}}
@@ -96,57 +96,7 @@
 }{}
 
 
-% Fonts and language
-
-\RequirePackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-\RequirePackage{cmap}
-\RequirePackage[TS1,T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
-\else % if luatex or xelatex
-\ifxetex
-    
-   \usepackage{sansmathfonts}
-   \usepackage{amssymb,amsmath}
-    \usepackage{mathrsfs}
-    \usepackage[T1]{fontenc}%
-    \usepackage[utf8]{inputenc}
-    \renewcommand*\familydefault{\sfdefault}
-    \usepackage{sansmathfonts}
-
-
-    % \usepackage[euler]{fontsetup}
-    % \usepackage[concrete]{fontsetup}
-    % \usepackage[libertinus]{fontsetup}
-    % \usepackage[kerkis]{fontsetup}
-    % \usepackage[gfsdidot]{fontsetup}
-  \else
-    \usepackage{fontspec}
-  \fi
-  %\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-\fi
-
-% Language
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-\RequirePackage[english]{babel}
-\else
-\usepackage{polyglossia}
-\setmainlanguage[]{english}
-\iftoggle{conference}{
-\setmonofont{JetBrains Mono}[ Scale= 0.65]
-}{\setmonofont{JetBrains Mono}[ Scale=0.85 ]}
-\fi
-
-
-
-% Microtype
-\AtEndOfClass{\RequirePackage{microtype}}
-
-% Use \say command for quotation
-\RequirePackage{dirtytalk}
-
-% for double-brackets
-\RequirePackage{stmaryrd}
+% Fonts
 
 %% Set up main page fonts
 \iftoggle{conference}{%
@@ -159,7 +109,7 @@
 \newcommand{\absfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\keywordsfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\footnotefont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
-
+\newcommand{\monofontscale}{0.65}
 }{%
 \newcommand{\headerfont}{\color{gray}\bfseries\fontsize{16pt}{20pt}\selectfont}
 \newcommand{\footerfont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
@@ -170,15 +120,61 @@
 \newcommand{\absfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\keywordsfont}{\normalfont\fontsize{8pt}{11pt}\selectfont}
 \newcommand{\footnotefont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
+\newcommand{\monofontscale}{0.85}
 }
 
-% AMS maths packages
-\RequirePackage{
-  amsmath,
-  amsfonts,
-  amsthm,
-  % amssymb
-}
+\usepackage{iftex}
+\ifPDFTeX
+  \RequirePackage[TS1,T1]{fontenc}
+  \RequirePackage[utf8]{inputenc}
+  \RequirePackage{cmap}
+  \RequirePackage{textcomp}
+\else
+  % \usepackage[euler]{fontsetup}
+  % \usepackage[concrete]{fontsetup}
+  % \usepackage[libertinus]{fontsetup}
+  % t\usepackage[kerkis]{fontsetup}
+  % \usepackage[gfsdidot]{fontsetup}
+
+  % \usepackage{sansmathfonts}
+  % \renewcommand*\familydefault{\sfdefault}
+
+  % \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+
+\RequirePackage{amsmath,amsthm}
+
+\RequirePackage[tt=false]{libertine}
+\RequirePackage[libertine]{newtxmath}
+
+\RequirePackage[varqu]{zi4} % inconsolata
+\ifPDFTeX\else
+  \setmonofont{inconsolata}[Scale=\monofontscale]
+\fi
+
+\RequirePackage{mathrsfs}
+
+% Language
+
+\ifPDFTeX
+  \RequirePackage[english]{babel}
+\else
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\fi
+
+% Microtype
+\AtEndOfClass{\RequirePackage{microtype}}
+
+% Use \say command for quotation
+\RequirePackage{dirtytalk}
+
+% for double-brackets
+\RequirePackage{stmaryrd}
+
 \allowdisplaybreaks
 
 % Additional maths packages
@@ -306,7 +302,7 @@ fit,                         % TIKZ fitting
 \usepackage{stackengine}
 \usepackage[most]{tcolorbox}
 
-% Tables 
+% Tables
 \RequirePackage{
   booktabs,                                   % overall nice table quality
   array,                                      % better column and row definitions
@@ -318,7 +314,7 @@ fit,                         % TIKZ fitting
   %xypic,                                      % for commutative diagrams
   footnote                                    % support for footnotes inside tabular
   % colortblarray,
-  % array,                                      % for better column definitions 
+  % array,                                      % for better column definitions
 }
 
 % Support footnotes inside tabular. No use table
@@ -363,7 +359,7 @@ fit,                         % TIKZ fitting
 % distance between two floats
 \setlength{\floatsep}{8pt \@plus 2.0pt \@minus 2.0pt}
 
-% Better captions 
+% Better captions
 \RequirePackage[
   skip=3pt,                                   % vertical space between caption and figure
   labelfont={bf,sf},                          % we bold the caption label
@@ -628,16 +624,16 @@ x}
 \fancypagestyle{plain}{%
     \fancyhf{}                                                          % clear everything
     \iftoggle{toprule}{%                                                % if SI, we add a top rule
-        \fancyhead[L]{%    
+        \fancyhead[L]{%
         $\vcenter{\hbox{{%
         \includegraphics[height=20pt]{templates/ART/logo/anoma-logo.pdf}%
       }}}%
-      \vcenter{%  
+      \vcenter{%
         {\Large
         \href{https://art.anoma.net}{Anoma Research Topics}} | \textsf{\arttype{}}
-      }$ 
-      % \hrule 
-      }                            % article type  
+      }$
+      % \hrule
+      }                            % article type
         % \\                                             % Add article type and rule
           % \colorbox{black}{\parbox{18em}{\centering\color{white}\subtitlefont{\arttype}}}}
     }{}
@@ -688,7 +684,7 @@ x}
   {}
   {0em}
   {#1}
-  []  
+  []
 \titleformat{\subsection}[runin]
   {\bfseries}
   {\thesubsection.}
@@ -871,7 +867,7 @@ x}
   \raggedright\equalcontribswitch{}
   % corresponding email
   \raggedright\contactswitch{}
-  % abstract / TOC section 
+  % abstract / TOC section
   \raggedright{
   \abstractBox{\abscontent{}}{absshadecolor}}
   \noindent % This is to remove indentation of minipage

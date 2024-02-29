@@ -1,4 +1,6 @@
 TEX := $(shell git ls-files | grep '\.tex$$')
+CLS := $(shell git ls-files | grep '\.cls$$')
+STY := $(shell git ls-files | grep '\.sty$$')
 MD := $(shell git ls-files | grep '\.md$$' | grep -v README)
 ORG := $(shell git ls-files | grep '\.org$$')
 
@@ -7,6 +9,9 @@ ORG_TEX := $(patsubst %.org,%.org.tex,$(ORG))
 
 # latexmk with xelatex
 MKPDF = latexmk -pdf -shell-escape -xelatex
+
+# latexmk with lualatex
+#MKPDF = latexmk -pdf -shell-escape -lualatex
 
 # latexmk with pdflatex
 #MKPDF_= latexmk -pdf -shell-escape
@@ -20,9 +25,9 @@ MKPDF = latexmk -pdf -shell-escape -xelatex
 pdf: main.pdf
 
 watch: main.pdf
-	while inotifywait -qe modify $(TEX) $(MD) $(ORG); do make main.pdf; done
+	while inotifywait -qe modify $(TEX) $(CLS) $(STY) $(MD) $(ORG); do make main.pdf; done
 
-main.pdf: main.tex $(TEX) $(MD_TEX) $(ORG_TEX)
+main.pdf: main.tex $(TEX) $(CLS) $(STY) $(MD_TEX) $(ORG_TEX)
 	$(MKPDF) $(MKPDF_OPTS) $<
 
 %.md.tex: %.md
@@ -43,5 +48,10 @@ main.pdf: main.tex $(TEX) $(MD_TEX) $(ORG_TEX)
 		-o $(patsubst %.org,%.org.tex,$<) \
 		$<
 
-clean:
-	rm -f main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk,pdf} $(MD_TEX) $(ORG_TEX)
+clean-pandoc:
+	rm -f $(MD_TEX) $(ORG_TEX)
+
+clean-latex:
+	rm -f main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk,pdf}
+
+clean: clean-pandoc clean-latex

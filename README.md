@@ -21,8 +21,9 @@ make
 This will generate `.md.tex` and `.org.tex` files using pandoc,
 and a `main.pdf` file using LaTeXMk and XeLaTeX.
 
-In case you don't have LaTeXMk installed, or wish to use pdflatex instead of XeLaTeX,
-change the `MKPDF` variable defined in the `Makefile`.
+Fonts are rendered best with the XeLaTeX engine.
+In case you don't have XeLaTeX or LaTeXMk installed,
+you may change the `MKPDF` variable defined in the `Makefile`.
 
 To continously rebuild `main.pdf` when a source file changes, run:
 
