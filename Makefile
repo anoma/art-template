@@ -7,9 +7,11 @@ ORG := $(shell git ls-files | grep '\.org$$')
 MD_TEX := $(patsubst %.md,%.md.tex,$(MD))
 ORG_TEX := $(patsubst %.org,%.org.tex,$(ORG))
 
+OUT?=output
+
 LATEXMK?=latexmk
 LATEXMK_TEXENGINE?=xelatex
-LATEXMK_OPTS?=-pdf -shell-escape -$(LATEXMK_TEXENGINE)
+LATEXMK_OPTS?=-pdf -shell-escape -$(LATEXMK_TEXENGINE) -output-directory=$(OUT)
 
 # latexmk with xelatex
 MKPDF?=$(LATEXMK) $(LATEXMK_OPTS)
