@@ -627,7 +627,7 @@ x}
     \iftoggle{toprule}{%                                                % if SI, we add a top rule
         \fancyhead[L]{%
         $\vcenter{\hbox{{%
-        \includegraphics[height=20pt]{templates/ART/logo/anoma-logo.pdf}%
+        \includegraphics[height=20pt]{logo/anoma-logo.pdf}%
       }}}%
       \vcenter{%
         {\Large
