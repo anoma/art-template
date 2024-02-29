@@ -1,3 +1,16 @@
+\newtoggle{test-minted}
+%\toggletrue{test-minted}
+
+\section{Text}
+
+Regular text.?! 0-123+456*789/0
+
+\texttt{ Monospace text.?! 0-123+456*789/0!}
+
+\textit{ Italic text.?! 0-123+456*789/0!}
+
+\textbf{ Bold text.?! 0-123+456*789/0!}
+
 \section{Math Equations}\label{math-equations}
 
 You may want to display math equations in three distinct styles: inline,
@@ -74,10 +87,10 @@ Let $S=\left\{v_1, v_2, \ldots, v_k\right\}$ be a set of vectors in $\mathbb{R}^
     \begin{equation}
         \begin{split}
         &(\mathit{Blue}, \mathit{Red})\\
-        &\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
-        &\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
-        &\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
-        &\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
+        &\mathcal{ABC DEF GHI JKL MNO PQR ST UVW XYZ}\\
+        &\mathbb{ABC DEF GHI JKL MNO PQR ST UVW XYZ}\\
+        &\mathfrak{ABC DEF GHI JKL MNO PQR ST UVW XYZ}\\
+        &\mathscr{ABC DEF GHI JKL MNO PQR ST UVW XYZ}\\
         \end{split}
     \end{equation}
 \end{center}
@@ -94,7 +107,7 @@ $$
 
 Note: If $\beta \in \Gamma$, then the form is undefined at the points in $S \cap \Gamma$, and the integral $l_l\left(i_1\right)$ diverges as $\varepsilon \rightarrow 0$. This pathological behavior can be handled by taking $\Gamma \subseteq S$.
 
-
+\iftoggle{test-minted}{
 {
   \small
 \begin{minted}{python}
@@ -106,6 +119,7 @@ def even_constraint(last_state, next_state_var, solver):
     return [(b, 1)]
 \end{minted}
 }
+}{}
 
 \begin{comment}
 

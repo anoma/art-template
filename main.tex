@@ -1,7 +1,7 @@
 \documentclass[
-    10pt,            % 8-20pt possible
+    10pt,           % 8-20pt possible
     twocolumn,      % switch, use twocolumn layout
-    techreport,        % select between  ``techreport'', ``report'', ``article'', ``commun'', ``persp'' and ``review''
+    techreport,     % select between  ``techreport'', ``report'', ``article'', ``commun'', ``persp'' and ``review''
     % lineno,         % switch, adds line numbering
     % tocfig,         % switch, use a TOC figure at the top (place in ./figs)
     % SI,             % switch to Supplemental Information format, not compatible with twocolumn
@@ -14,25 +14,34 @@
 
 \input{metadata.tex}
 \input{macros.tex}
-
-\let\autocite=\cite
+%\input{pandoc.tex} % needed for pandoc-generated files
 
 \begin{document}
 \maketitle
 
 \tableofcontents
 
-\section{Introduction}
+%\input{test.tex} % disable twocolumn for tests
 
-\input{test.tex}
+\section{Introduction}
 
 \section{Concluding remarks}
 
 \section{Acknowledgements}
-\nocite{*}
+
+%\input{intro.md.tex}
+
+%\input{related.md.tex}
+
+%\input{conclusion.md.tex}
+
+%\input{ack.org.tex}
+
+%\nocite{*} % include all refs, even if not cited
 \bibliography{ref.bib}
 
 \appendix
 \section{Some extra stuff}
+
 
 \end{document}
