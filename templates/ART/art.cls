@@ -269,7 +269,7 @@
 % Figures
 \RequirePackage{graphicx}                     % include pictures
 \RequirePackage{tikz}                         % drawing pictures
-\RequirePackage{templates/ART/quiver}     % drawing quiver diagrams
+\RequirePackage{quiver}                       % drawing quiver diagrams
 \usetikzlibrary{%
 svg.path,                     % TIKZ svg paths
 calc,                        % TIKZ calculations
