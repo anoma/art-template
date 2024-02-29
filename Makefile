@@ -7,14 +7,17 @@ ORG := $(shell git ls-files | grep '\.org$$')
 MD_TEX := $(patsubst %.md,%.md.tex,$(MD))
 ORG_TEX := $(patsubst %.org,%.org.tex,$(ORG))
 
+# output directory
+OUT = output
+
 # latexmk with xelatex
-MKPDF = latexmk -pdf -shell-escape -xelatex
+MKPDF = latexmk -pdf -shell-escape -output-directory=$(OUT) -xelatex
 
 # latexmk with lualatex
-#MKPDF = latexmk -pdf -shell-escape -lualatex
+#MKPDF = latexmk -pdf -shell-escape -output-directory=$(OUT) -lualatex
 
 # latexmk with pdflatex
-#MKPDF_= latexmk -pdf -shell-escape
+#MKPDF_= latexmk -pdf -shell-escape -output-directory=$(OUT)
 
 # xelatex
 #MKPDF = xelatex -shell-escape
@@ -52,6 +55,6 @@ clean-pandoc:
 	rm -f $(MD_TEX) $(ORG_TEX)
 
 clean-latex:
-	rm -f main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk,pdf}
+	rm -f $(OUT)/main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk}
 
 clean: clean-pandoc clean-latex
