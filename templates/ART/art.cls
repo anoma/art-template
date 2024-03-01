@@ -422,7 +422,7 @@ fit,                         % TIKZ fitting
 \RequirePackage[
     numbers,                % numbers as references
     merge,                  % merge multiple references in one
-    % super,                  % superscript
+    %super,                 % superscript
     %sort&compress,
     %round,                 % parentheses around year
     %semicolon,             % separate references with semicolon
@@ -581,6 +581,7 @@ x}
 
 %% Article meta data additional fields
 \newcommand{\pubdoi}[1]{\def\@pubdoi{#1}}
+\newcommand{\pubdate}[1]{\def\@pubdate{#1}}
 
 \iftoggle{history}{%
 \newcommand{\history}[1]{\def\@history{#1}}%
@@ -623,11 +624,11 @@ x}
     \footerfont\textit{Supplementary Information}\hspace{7pt}|%         % we add SI as text
   }{
     \iftoggle{footpreprint}{
-      \footerfont\href{http://art.anoma.net}{Anoma Research Topics}\hspace{7pt}|%                        % we add preprint text
+      \footerfont\href{http://art.anoma.net}{Anoma Research Topics}\hspace{7pt}|% % we add preprint text
     }{}
   }
   \iftoggle{footdate}{
-    \hspace{7pt}\textbf{\today}\hspace{7pt}|%                           % add date
+    \hspace{7pt}\textbf{\@ifundefined{@pubdate}{\today}{\@pubdate}}\hspace{7pt}|% % add date
   }{}
   \hspace{7pt}\textbf{\thepage}}                                        % add page number
 \fancyfoot[L]{%                                                         % footer left side
@@ -663,7 +664,7 @@ x}
       }{}
     }
     \iftoggle{footdate}{
-      \hspace{7pt}\textbf{\today}\hspace{7pt}|%                         % add date
+      \hspace{7pt}\textbf{\@ifundefined{@pubdate}{\today}{\@pubdate}}\hspace{7pt}|% % add date
     }{}
       \hspace{7pt}\textbf{\thepage\textendash\pageref{LastPage}}}       % add page number
     \fancyfoot[L]{\footerfont\@ifundefined{@pubdoi}{}{%                 % footer left side
