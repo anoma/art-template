@@ -12,17 +12,29 @@ To begin, clone the repository and modify the `main.tex` file.
 You may include `md.tex` and `.org.tex` files
 which are generated using pandoc from their `.md` and `.org` counterparts.
 
-Once done, build the PDF file:
+## Building
+
+LaTeXMk and XeLaTeX are necessary to build the PDF.
+
+To build the PDF file:
 
 ```
 make
 ```
 
-This will generate `.md.tex` and `.org.tex` files using pandoc,
-and a `main.pdf` file using LaTeXMk and XeLaTeX.
+Fonts are rendered best with the XeLaTeX engine, however,
+if you don't have it installed, you may use other engines:
 
-In case you don't have LaTeXMk installed, or wish to use pdflatex instead of XeLaTeX,
-change the `MKPDF` variable defined in the `Makefile`.
+`make luatex`
+
+or
+
+`make pdflatex`
+
+
+This will generate `.md.tex` and `.org.tex` files using pandoc,
+and an `main.pdf` file in the `output/` directory.
+
 
 To continously rebuild `main.pdf` when a source file changes, run:
 

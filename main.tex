@@ -1,7 +1,7 @@
 \documentclass[
-    11pt,            % 8-20pt possible
-    % twocolumn,      % switch, use twocolumn layout
-    techreport,        % select between  ``techreport'', ``report'', ``article'', ``commun'', ``persp'' and ``review''
+    10pt,           % 8-20pt possible
+    twocolumn,      % switch, use twocolumn layout
+    techreport,     % select between  ``techreport'', ``report'', ``article'', ``commun'', ``persp'' and ``review''
     % lineno,         % switch, adds line numbering
     % tocfig,         % switch, use a TOC figure at the top (place in ./figs)
     % SI,             % switch to Supplemental Information format, not compatible with twocolumn
@@ -10,32 +10,39 @@
     % nofootdate,     % do not add date in footer
     % debug,          % switch, add debugging boxes
     % draft,          % for quick compilations (no figures, references etc)
+    % nobibstyle,     % do not set \bibliographystyle
 ]{art}
 
 \input{metadata.tex}
 \input{macros.tex}
-
-\let\autocite=\cite
+%\input{pandoc.tex} % needed for pandoc-generated files
 
 \begin{document}
-
 \maketitle
 
-\tableofcontents
+%\tableofcontents
 
-\input{intro.md.tex}
+\input{test.tex}
 
-\input{related.md.tex}
+\section{Introduction}
 
-\input{conclusion.md.tex}
+\section{Concluding remarks}
 
-\input{ack.org.tex}
+\section{Acknowledgements}
 
-\nocite{*}
+%\input{intro.md.tex}
+
+%\input{related.md.tex}
+
+%\input{conclusion.md.tex}
+
+%\input{ack.org.tex}
+
+%\nocite{*} % include all refs, even if not cited
 \bibliography{ref.bib}
 
 \appendix
+\section{Some extra stuff}
 
-\input{appendix.tex}
 
 \end{document}

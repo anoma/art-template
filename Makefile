@@ -1,28 +1,43 @@
 TEX := $(shell git ls-files | grep '\.tex$$')
+CLS := $(shell git ls-files | grep '\.cls$$')
+STY := $(shell git ls-files | grep '\.sty$$')
 MD := $(shell git ls-files | grep '\.md$$' | grep -v README)
 ORG := $(shell git ls-files | grep '\.org$$')
 
 MD_TEX := $(patsubst %.md,%.md.tex,$(MD))
 ORG_TEX := $(patsubst %.org,%.org.tex,$(ORG))
 
-# latexmk with xelatex
-MKPDF = latexmk -pdf -shell-escape -xelatex
+OUT ?= output
 
-# latexmk with pdflatex
-#MKPDF_= latexmk -pdf -shell-escape
+LATEXMK ?= latexmk
+LATEXMK_TEXENGINE ?= xelatex
+LATEXMK_OPTS ?= -pdf -shell-escape -$(LATEXMK_TEXENGINE) -output-directory=$(OUT)
 
-# xelatex
-#MKPDF = xelatex -shell-escape
+MKPDF ?= $(LATEXMK) $(LATEXMK_OPTS)
 
-# pdflatex
-#MKPDF = pdflatex
+.PHONY: xelatex
+xelatex: LATEXMK_TEXENGINE:=xelatex
+xelatex: main
 
-pdf: main.pdf
+.PHONY: lualatex
+lualatex: LATEXMK_TEXENGINE:=lualatex
+lualatex: main
 
-watch: main.pdf
-	while inotifywait -qe modify $(TEX) $(MD) $(ORG); do make main.pdf; done
+.PHONY: pdflatex
+pdflatex: LATEXMK_TEXENGINE:=pdflatex
+pdflatex: main
+	@echo "We recommend using xelatex or lualatex instead of pdflatex."
 
-main.pdf: main.tex $(TEX) $(MD_TEX) $(ORG_TEX)
+all: pdf
+
+pdf: xelatex
+
+watch: main
+	while inotifywait -qe modify $(TEX) $(CLS) $(STY) $(MD) $(ORG); do make main; done
+
+main: $(OUT)/main.pdf
+
+$(OUT)/main.pdf: main.tex $(TEX) $(CLS) $(STY) $(MD_TEX) $(ORG_TEX)
 	$(MKPDF) $(MKPDF_OPTS) $<
 
 %.md.tex: %.md
@@ -43,5 +58,10 @@ main.pdf: main.tex $(TEX) $(MD_TEX) $(ORG_TEX)
 		-o $(patsubst %.org,%.org.tex,$<) \
 		$<
 
-clean:
-	rm -f main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk,pdf} $(MD_TEX) $(ORG_TEX)
+clean-pandoc:
+	rm -f $(MD_TEX) $(ORG_TEX)
+
+clean-latex:
+	rm -f $(OUT)/main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk}
+
+clean: clean-pandoc clean-latex

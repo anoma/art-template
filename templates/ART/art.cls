@@ -25,12 +25,15 @@
 \toggletrue{footpreprint}         % on by default
 \newtoggle{debug}                 % debugging activated
 \newtoggle{history}               % information about the revision history
-\toggletrue{history}        
+\toggletrue{history}
 \newtoggle{toc}                   % table of contents
-\togglefalse{toc}                  % on by default
+\togglefalse{toc}                 % off by default
 \newtoggle{conference}            % conference mode
-\togglefalse{conference}           % off by default
-
+\togglefalse{conference}          % off by default
+\newtoggle{bibconfig}             % no bibliography config
+\toggletrue{bibconfig}            % on by default
+\newtoggle{bibstyle}              % no bibliography style
+\toggletrue{bibstyle}             % on by default
 
 % Option for type of article
 \newcommand{\arttype}{ARTICLE}
@@ -58,11 +61,11 @@
   \toggletrue{twocolumn}
   \PassOptionsToClass{twocolumn}{extarticle}
   }
-  
-  % Option for line numbers
-  \DeclareOption{lineno}{\toggletrue{linenumbers}}
-  
-  % Option for footer
+
+% Option for line numbers
+\DeclareOption{lineno}{\toggletrue{linenumbers}}
+
+% Option for footer
 \DeclareOption{nofootdate}{\togglefalse{footdate}}
 \DeclareOption{nofootprint}{\togglefalse{footpreprint}}
 
@@ -71,6 +74,9 @@
 
 % Option for toc image
 \DeclareOption{tocfig}{\toggletrue{tocfig}}
+
+\DeclareOption{nobibconfig}{\togglefalse{bibconfig}}
+\DeclareOption{nobibstyle}{\togglefalse{bibstyle}}
 
 % Option for debugging format
 \DeclareOption{debug}{\toggletrue{debug}}
@@ -96,57 +102,7 @@
 }{}
 
 
-% Fonts and language
-
-\RequirePackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-\RequirePackage{cmap}
-\RequirePackage[TS1,T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
-\else % if luatex or xelatex
-\ifxetex
-    
-   \usepackage{sansmathfonts}
-   \usepackage{amssymb,amsmath}
-    \usepackage{mathrsfs}
-    \usepackage[T1]{fontenc}%
-    \usepackage[utf8]{inputenc}
-    \renewcommand*\familydefault{\sfdefault}
-    \usepackage{sansmathfonts}
-
-
-    % \usepackage[euler]{fontsetup}
-    % \usepackage[concrete]{fontsetup}
-    % \usepackage[libertinus]{fontsetup}
-    % \usepackage[kerkis]{fontsetup}
-    % \usepackage[gfsdidot]{fontsetup}
-  \else
-    \usepackage{fontspec}
-  \fi
-  %\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-\fi
-
-% Language
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-\RequirePackage[english]{babel}
-\else
-\usepackage{polyglossia}
-\setmainlanguage[]{english}
-\iftoggle{conference}{
-\setmonofont{JetBrains Mono}[ Scale= 0.65]
-}{\setmonofont{JetBrains Mono}[ Scale=0.85 ]}
-\fi
-
-
-
-% Microtype
-\AtEndOfClass{\RequirePackage{microtype}}
-
-% Use \say command for quotation
-\RequirePackage{dirtytalk}
-
-% for double-brackets
-\RequirePackage{stmaryrd}
+% Fonts
 
 %% Set up main page fonts
 \iftoggle{conference}{%
@@ -159,7 +115,7 @@
 \newcommand{\absfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\keywordsfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\footnotefont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
-
+\newcommand{\monofontscale}{0.94}
 }{%
 \newcommand{\headerfont}{\color{gray}\bfseries\fontsize{16pt}{20pt}\selectfont}
 \newcommand{\footerfont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
@@ -170,15 +126,62 @@
 \newcommand{\absfont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\keywordsfont}{\normalfont\fontsize{8pt}{11pt}\selectfont}
 \newcommand{\footnotefont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
+\newcommand{\monofontscale}{0.94}
 }
 
-% AMS maths packages
-\RequirePackage{
-  amsmath,
-  amsfonts,
-  amsthm,
-  % amssymb
-}
+\usepackage{iftex}
+\ifPDFTeX
+  \RequirePackage[LGR,TS1,T1]{fontenc}
+  \RequirePackage[utf8]{inputenc}
+  \RequirePackage{cmap}
+  \RequirePackage{textcomp}
+\else
+  % \usepackage[euler]{fontsetup}
+  % \usepackage[concrete]{fontsetup}
+  % \usepackage[libertinus]{fontsetup}
+  % \usepackage[kerkis]{fontsetup}
+  % \usepackage[gfsdidot]{fontsetup}
+
+  % \usepackage{sansmathfonts}
+  % \renewcommand*\familydefault{\sfdefault}
+
+  % \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+
+\RequirePackage[libertine,amsthm]{newtx}
+
+\RequirePackage[varqu,scaled=\monofontscale]{zi4} % inconsolata
+\ifPDFTeX
+  %\RequirePackage[scaled=.78]{beramono}
+  %\RequirePackage[scaled=.83]{cascadia-code}
+  %\RequirePackage[scaled=.825]{GoMono}
+\else
+  \setmonofont[Scale=MatchLowercase]{inconsolata}
+\fi
+
+\RequirePackage{mathrsfs}
+
+% Language
+
+\ifPDFTeX
+  \RequirePackage[english]{babel}
+\else
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\fi
+
+% Microtype
+\AtEndOfClass{\RequirePackage{microtype}}
+
+% Use \say command for quotation
+\RequirePackage{dirtytalk}
+
+% for double-brackets
+\RequirePackage{stmaryrd}
+
 \allowdisplaybreaks
 
 % Additional maths packages
@@ -272,7 +275,7 @@
 % Figures
 \RequirePackage{graphicx}                     % include pictures
 \RequirePackage{tikz}                         % drawing pictures
-\RequirePackage{templates/ART/quiver}     % drawing quiver diagrams
+\RequirePackage{quiver}                       % drawing quiver diagrams
 \usetikzlibrary{%
 svg.path,                     % TIKZ svg paths
 calc,                        % TIKZ calculations
@@ -306,7 +309,7 @@ fit,                         % TIKZ fitting
 \usepackage{stackengine}
 \usepackage[most]{tcolorbox}
 
-% Tables 
+% Tables
 \RequirePackage{
   booktabs,                                   % overall nice table quality
   array,                                      % better column and row definitions
@@ -318,7 +321,7 @@ fit,                         % TIKZ fitting
   %xypic,                                      % for commutative diagrams
   footnote                                    % support for footnotes inside tabular
   % colortblarray,
-  % array,                                      % for better column definitions 
+  % array,                                      % for better column definitions
 }
 
 % Support footnotes inside tabular. No use table
@@ -363,7 +366,7 @@ fit,                         % TIKZ fitting
 % distance between two floats
 \setlength{\floatsep}{8pt \@plus 2.0pt \@minus 2.0pt}
 
-% Better captions 
+% Better captions
 \RequirePackage[
   skip=3pt,                                   % vertical space between caption and figure
   labelfont={bf,sf},                          % we bold the caption label
@@ -414,16 +417,24 @@ fit,                         % TIKZ fitting
 
 % Bibliography, footnotes and their settings
 
+\iftoggle{bibconfig}{
 % Natbib package for text references
 \RequirePackage[
-    % numbers,                % numbers as references
+    numbers,                % numbers as references
     merge,                  % merge multiple references in one
-    % super,                  % superscript
-    sort&compress,
-    round,                  % parentheses around year
-    semicolon,              % separate references with semicolon
-    nonamebreak,           % keep authors on the same line
+    %super,                 % superscript
+    %sort&compress,
+    %round,                 % parentheses around year
+    %semicolon,             % separate references with semicolon
+    %nonamebreak,           % keep authors on the same line
 ]{natbib}
+
+\iftoggle{bibstyle}{
+%\bibliographystyle{unsrtnat}
+\bibliographystyle{alpha}
+%\bibliographystyle{apalike}
+%\bibliographystyle{ACM-Reference-Format}
+}{}
 
 % Moves references after punctuation
 \RequirePackage{natmove}
@@ -432,7 +443,7 @@ fit,                         % TIKZ fitting
 % Bibliography style
 %% No separation between references
 \setlength{\bibsep}{0.0pt}
-\bibliographystyle{unsrtnat}
+
 %% set Bibliography font
 \renewcommand\bibfont{\normalfont\fontsize{10}{11}\selectfont}
 
@@ -444,6 +455,8 @@ fit,                         % TIKZ fitting
 }
 %% Remove brackets from label
 \renewcommand\@biblabel[1]{ #1.}
+
+}{} % bibconfig
 
 % Footnotes
 \RequirePackage[%
@@ -568,6 +581,7 @@ x}
 
 %% Article meta data additional fields
 \newcommand{\pubdoi}[1]{\def\@pubdoi{#1}}
+\newcommand{\pubdate}[1]{\def\@pubdate{#1}}
 
 \iftoggle{history}{%
 \newcommand{\history}[1]{\def\@history{#1}}%
@@ -610,11 +624,11 @@ x}
     \footerfont\textit{Supplementary Information}\hspace{7pt}|%         % we add SI as text
   }{
     \iftoggle{footpreprint}{
-      \footerfont\href{http://art.anoma.net}{Anoma Research Topics}\hspace{7pt}|%                        % we add preprint text
+      \footerfont\href{http://art.anoma.net}{Anoma Research Topics}\hspace{7pt}|% % we add preprint text
     }{}
   }
   \iftoggle{footdate}{
-    \hspace{7pt}\textbf{\today}\hspace{7pt}|%                           % add date
+    \hspace{7pt}\textbf{\@ifundefined{@pubdate}{\today}{\@pubdate}}\hspace{7pt}|% % add date
   }{}
   \hspace{7pt}\textbf{\thepage}}                                        % add page number
 \fancyfoot[L]{%                                                         % footer left side
@@ -628,16 +642,16 @@ x}
 \fancypagestyle{plain}{%
     \fancyhf{}                                                          % clear everything
     \iftoggle{toprule}{%                                                % if SI, we add a top rule
-        \fancyhead[L]{%    
+        \fancyhead[L]{%
         $\vcenter{\hbox{{%
-        \includegraphics[height=20pt]{templates/ART/logo/anoma-logo.pdf}%
+        \includegraphics[height=20pt]{anoma-logo.pdf}%
       }}}%
-      \vcenter{%  
+      \vcenter{%
         {\Large
         \href{https://art.anoma.net}{Anoma Research Topics}} | \textsf{\arttype{}}
-      }$ 
-      % \hrule 
-      }                            % article type  
+      }$
+      % \hrule
+      }                            % article type
         % \\                                             % Add article type and rule
           % \colorbox{black}{\parbox{18em}{\centering\color{white}\subtitlefont{\arttype}}}}
     }{}
@@ -650,7 +664,7 @@ x}
       }{}
     }
     \iftoggle{footdate}{
-      \hspace{7pt}\textbf{\today}\hspace{7pt}|%                         % add date
+      \hspace{7pt}\textbf{\@ifundefined{@pubdate}{\today}{\@pubdate}}\hspace{7pt}|% % add date
     }{}
       \hspace{7pt}\textbf{\thepage\textendash\pageref{LastPage}}}       % add page number
     \fancyfoot[L]{\footerfont\@ifundefined{@pubdoi}{}{%                 % footer left side
@@ -688,28 +702,54 @@ x}
   {}
   {0em}
   {#1}
-  []  
+  []
+\iftoggle{twocolumn}{
 \titleformat{\subsection}[runin]
   {\bfseries}
   {\thesubsection.}
   {0.5em}
   {#1. }
   []
+}{
+\titleformat{\subsection}
+  {\bfseries}
+  {\thesubsection.}
+  {0.5em}
+  {#1}
+  []
+}
+\iftoggle{twocolumn}{
 \titleformat{\subsubsection}[runin]
   {\bfseries}
   {\thesubsubsection.}
   {0.5em}
   {#1. }
   []
+}{
+\titleformat{\subsubsection}
+  {\bfseries}
+  {\thesubsubsection.}
+  {0.5em}
+  {#1}
+  []
+}
 \titleformat{\paragraph}[runin]
   {\small\bfseries}
   {}
   {0em}
-  {#1}
+  {#1. }
+
+\iftoggle{twocolumn}{
+\titlespacing*{\section}{0pc}{3ex \@plus4pt \@minus3pt}{5pt}
+\titlespacing*{\subsection}{0pc}{2.5ex \@plus3pt \@minus2pt}{12pt}
+\titlespacing*{\subsubsection}{0pc}{2ex \@plus2.5pt \@minus1.5pt}{12pt}
+\titlespacing*{\paragraph}{0pc}{1.5ex \@plus2pt \@minus1pt}{12pt}
+}{
 \titlespacing*{\section}{0pc}{3ex \@plus4pt \@minus3pt}{5pt}
 \titlespacing*{\subsection}{0pc}{2.5ex \@plus3pt \@minus2pt}{2pt}
 \titlespacing*{\subsubsection}{0pc}{2ex \@plus2.5pt \@minus1.5pt}{2pt}
 \titlespacing*{\paragraph}{0pc}{1.5ex \@plus2pt \@minus1pt}{12pt}
+}
 
 %% Abstract formatting
 \def\xabstract{abstract}
@@ -871,7 +911,7 @@ x}
   \raggedright\equalcontribswitch{}
   % corresponding email
   \raggedright\contactswitch{}
-  % abstract / TOC section 
+  % abstract / TOC section
   \raggedright{
   \abstractBox{\abscontent{}}{absshadecolor}}
   \noindent % This is to remove indentation of minipage
