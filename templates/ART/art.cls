@@ -16,24 +16,25 @@
 \newtoggle{tocfig}                % small figure next to the abstract
 \newtoggle{twocolumn}             % text will be laid out in two column
 \newtoggle{toprule}               % large line at the top
-\toggletrue{toprule}              % on by default
+\toggletrue{toprule}
 \newtoggle{linenumbers}           % including line numbers
 \newtoggle{affiltop}              % author affiliation at the top
+\toggletrue{affiltop}
 \newtoggle{footdate}              % add current date in footer
-\toggletrue{footdate}             % on by default
+\toggletrue{footdate}
 \newtoggle{footpreprint}          % add a "Preprint" text in footer
-\toggletrue{footpreprint}         % on by default
+\toggletrue{footpreprint}
 \newtoggle{debug}                 % debugging activated
 \newtoggle{history}               % information about the revision history
 \toggletrue{history}
 \newtoggle{toc}                   % table of contents
-\togglefalse{toc}                 % off by default
+\togglefalse{toc}
 \newtoggle{conference}            % conference mode
-\togglefalse{conference}          % off by default
+\togglefalse{conference}
 \newtoggle{bibconfig}             % no bibliography config
-\toggletrue{bibconfig}            % on by default
+\toggletrue{bibconfig}
 \newtoggle{bibstyle}              % no bibliography style
-\toggletrue{bibstyle}             % on by default
+\toggletrue{bibstyle}
 
 % Option for type of article
 \newcommand{\arttype}{ARTICLE}
@@ -45,13 +46,18 @@
 \DeclareOption{toc}{\toggletrue{toc}}
 
 \DeclareOption{conference}{%
-%set fontize to 12pt
-\PassOptionsToClass{12pt}{extarticle}%
 \renewcommand{\arttype}{CONFERENCE ARTICLE}%
 \toggletrue{conference}%
 \togglefalse{history}%
 }
 
+\DeclareOption{letterpaper}{
+  \PassOptionsToClass{letterpaper}{geometry}
+}
+
+\DeclareOption{a4paper}{
+  \PassOptionsToClass{a4paper}{geometry}
+}
 
 % Option for switching to SI format
 \DeclareOption{SI}{\toggletrue{SI}}
@@ -83,7 +89,7 @@
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}  % pass other options to base class
 \ProcessOptions*\relax                                            % finish options
-\LoadClass{extarticle}
+\LoadClass[12pt]{extarticle}
 
 % Global settings for SI format
 
@@ -237,10 +243,11 @@
 % General pagination setup and tools
 
 \RequirePackage[
-  a4paper,includeheadfoot,                    % paper size, head/foot included in geometry
+%letterpaper,
+  includeheadfoot,                    % paper size, head/foot included in geometry
   headheight=26pt,includeheadfoot,            % header height
-  top=35pt,bottom=50pt,                       % top/bottom
-  left=75pt,right=75pt,                       % left/right
+  top=3cm,bottom=3cm,                       % top/bottom
+  left=4cm,right=4cm,                       % left/right
   marginparwidth=2cm,                         % margins (used for line numbers)
   marginparsep=5pt,                           % margin separation
   headheight=20pt,                            % header height
@@ -344,14 +351,14 @@ fit,                         % TIKZ fitting
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 
 \AtBeginEnvironment{tabular}{%                % font inside tables will be small
-  \fontsize{7.5}{10}\selectfont
+  \fontsize{10}{12}\selectfont
 }
 %% command we can use to add some text e.g. below the table
 \newcommand{\addtabletext}[1]{{\setlength{\leftskip}{9pt}\fontsize{7}{9}\selectfont#1}}
 
 % Equations
 % placed in square brackets
-\renewcommand\tagform@[1]{\maketag@@@ {[\ignorespaces #1\unskip \@@italiccorr ]}}
+%\renewcommand\tagform@[1]{\maketag@@@ {[\ignorespaces #1\unskip \@@italiccorr ]}}
 % For numbering just one line of an equation
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
@@ -370,15 +377,15 @@ fit,                         % TIKZ fitting
 \RequirePackage[
   skip=3pt,                                   % vertical space between caption and figure
   labelfont={bf,sf},                          % we bold the caption label
-  labelsep=period,                       % periods after label (Fig. 1:)
-  % figurename=Figire                            % figure will be abbreviated
-  % tablename=Tbl.,                             % table will be abbreviated
+  labelsep=period,                            % periods after label (Fig. 1:)
+  % figurename=Fig.                           % figure will be abbreviated
+  % tablename=Tbl.                            % table will be abbreviated
 ]{caption}
 % overall font types (excluding label)
 \iftoggle{conference}{%
-  \DeclareCaptionFormat{fmt}{\normalfont\fontsize{10pt}{11pt}\selectfont#1#2#3}
+  \DeclareCaptionFormat{fmt}{\normalfont\fontsize{10pt}{12pt}\selectfont#1#2#3}
 }{
-  \DeclareCaptionFormat{fmt}{\normalfont\fontsize{8pt}{10pt}\selectfont#1#2#3}
+  \DeclareCaptionFormat{fmt}{\normalfont\fontsize{10pt}{12pt}\selectfont#1#2#3}
 }
 \captionsetup*{format=fmt}                        % for figures
 \captionsetup*[table]{format=fmt,position=above}  % for tables
