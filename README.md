@@ -54,9 +54,9 @@ For full-width figures set the width to `1.3\textwidth`:
 
 ### References
 
-The references are stored in the `ref.bib` file. We have included a few
-references as of other ARTs and related papers. Feel free to add your own
-references.
+The references are stored in the `ref.bib` file.
+We have included a few references as of other ARTs and related papers.
+Feel free to add your own references.
 
 ## Updating the template
 
