@@ -6,13 +6,59 @@ render_macros: false
 
 This is a template for writing Anoma Research Topics, a.k.a ARTs in LaTeX.
 
-## LaTeX template
+## Using the template
 
-To begin, clone the repository and modify the `main.tex` file.
-You may include `md.tex` and `.org.tex` files
-which are generated using pandoc from their `.md` and `.org` counterparts.
+To begin, clone the repository:
 
-### Update template
+`git clone https://github.com/anoma/art-template`
+
+You may remove the `examples/` directory:
+
+`git rm -rf examples`
+
+The document is defined in the `main.tex` file.
+Update the class options at the top, if necessary.
+
+You may include here further `.tex`, '`.md.tex` and `.org.tex` files
+using `\input` statements.
+
+The `.md.tex` and `.org.tex` files are generated using pandoc
+from their `.md` and `.org` counterparts.
+When including pandoc-generated files,
+make sure to also include `templates/pandoc.tex`.
+
+### Class options
+
+- paper size: `a4paper` or `letterpaper` (must be present)
+- add line numbers: `lineno` (optional)
+- document type:
+  - `article`: Article (default)
+  - `techreport`: Technical Report
+  - `report`: Report
+  - `commun`: Communication
+  - `persp`: Perspective
+  - `review`: Review
+
+### Tables & figures
+
+Tables and figures may be wider than `\textwidth`, and should be centered.
+For this reason, add a `\centerline{}`
+around the `\begin{tabular}...\end{tabular}`
+and `\includegraphics{...}` statements.
+
+For full-width figures set the width to `1.3\textwidth`:
+
+```latex
+\centerline{\includegraphics[width=1.3\textwidth]{filename}}
+```
+
+### References
+
+The references are stored in the `ref.bib` file. We have included a few
+references as of other ARTs and related papers. Feel free to add your own
+references.
+
+## Updating the template
 
 To update to the latest version of the LaTeX template
 in an already existing repository using the template,
@@ -26,15 +72,18 @@ If you're updating from an old version of the template
 that does not have a Makefile yet, run the following instead:
 
 ```
-
+curl -O https://raw.githubusercontent.com/anoma/art-template/main/Makefile
 make update-template-old
 ```
 
-This will also apply fixes to the `*.tex` files in the repository.
+In addition to updating the template,
+this will also apply fixes to the `*.tex` files in the repository using `bin/fix.sh`:
+- add paper size and remove font size class options
+- center tables
 
 ## LaTeX fixes
 
-`bin/fix.sh` offers automatic fixes for common issues with LaTeX source files.
+`bin/fix.sh` offers automatic fixes for common issues in LaTeX source files.
 To see the available options, run it without arguments.
 
 ## Building
@@ -91,9 +140,3 @@ you will need to include the following code into your emacs configuration:
 (setq org-latex-default-packages-alist nil)
 (setq org-latex-with-hyperref nil)
 </pre>
-
-## References
-
-The references are stored in the `ref.bib` file. We have included a few
-references as of other ARTs and related papers. Feel free to add your own
-references.
