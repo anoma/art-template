@@ -351,7 +351,7 @@ fit,                         % TIKZ fitting
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 
 \AtBeginEnvironment{tabular}{%                % font inside tables will be small
-  \fontsize{10}{12}\selectfont
+  \fontsize{9}{11}\selectfont
 }
 %% command we can use to add some text e.g. below the table
 \newcommand{\addtabletext}[1]{{\setlength{\leftskip}{9pt}\fontsize{7}{9}\selectfont#1}}
