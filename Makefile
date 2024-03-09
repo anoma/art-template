@@ -70,10 +70,10 @@ clean-latex:
 clean: clean-pandoc clean-latex
 
 update-template:
-	curl -sL https://github.com/anoma/art-template/tarball/main | gunzip -c | $(TAR) xv --strip-components=1 --wildcards '*/Makefile' '*/latexmkrc' '*/templates' '*/bin'
+	curl -sL https://github.com/anoma/art-template/tarball/main | gunzip -c | $(TAR) xv --strip-components=1 --wildcards '*/Makefile' '*/latexmkrc' '*/.gitignore' '*/templates' '*/bin'
+	git add Makefile latexmkrc .gitignore templates bin
 
 update-template-old: update-template
 	bin/fix.sh opts-paper-font main.tex
 	bin/fix.sh tabular-center $(TEX)
-	git add Makefile latexmkrc templates bin
 	test -f art.cls && git rm -f art.cls || true
