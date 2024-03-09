@@ -35,7 +35,7 @@ fi
 case $issue in
     opts-paper-font)
         $SED $SED_OPTS 's/[0-9]\+pt, *\(% *8-20pt *possible.*\)\?/a4paper,/' $@;;
-    tabular-centerline)
+    tabular-center)
         $SED $SED_OPTS 's/\\begin{tabular}/\\centerline{\\begin/g' $@
         $SED $SED_OPTS 's/\\end{tabular}/\\end{tabular}}/g' $@;;
     caption-period)
