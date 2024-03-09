@@ -6,11 +6,36 @@ render_macros: false
 
 This is a template for writing Anoma Research Topics, a.k.a ARTs in LaTeX.
 
-## Latex template
+## LaTeX template
 
 To begin, clone the repository and modify the `main.tex` file.
 You may include `md.tex` and `.org.tex` files
 which are generated using pandoc from their `.md` and `.org` counterparts.
+
+### Update template
+
+To update to the latest version of the LaTeX template
+in an already existing repository using the template,
+run the following:
+
+```
+make update-template
+```
+
+If you're updating from an old version of the template
+that does not have a Makefile yet, run the following instead:
+
+```
+
+make update-template-old
+```
+
+This will also apply fixes to the `*.tex` files in the repository.
+
+## LaTeX fixes
+
+`bin/fix.sh` offers automatic fixes for common issues with LaTeX source files.
+To see the available options, run it without arguments.
 
 ## Building
 
