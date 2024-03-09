@@ -6,14 +6,24 @@
 
 \input{metadata.tex}
 \input{macros.tex}
-%\input{pandoc.tex} % needed for pandoc-generated files
+%\input{templates/pandoc.tex} % needed for pandoc-generated files
 
 \begin{document}
 \maketitle
 
-%\tableofcontents
+\tableofcontents
 
-\input{test.tex}
+
+\input{examples/test.tex}
+
+%\input{examples/intro.md.tex}
+
+%\input{examples/related.md.tex}
+
+%\input{examples/conclusion.md.tex}
+
+%\input{examples/ack.org.tex}
+
 
 \section{Introduction}
 
@@ -21,18 +31,13 @@
 
 \section{Acknowledgements}
 
-%\input{intro.md.tex}
-
-%\input{related.md.tex}
-
-%\input{conclusion.md.tex}
-
-%\input{ack.org.tex}
 
 %\nocite{*} % include all refs, even if not cited
 \bibliography{ref.bib}
 
+
 \appendix
+
 \section{Some extra stuff}
 
 
