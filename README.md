@@ -54,15 +54,13 @@ For full-width figures set the width to `1.3\textwidth`:
 
 ### References
 
-The references are stored in the `ref.bib` file.
-We have included a few references as of other ARTs and related papers.
-Feel free to add your own references.
+References of already published ARTs and related papers are in `art.bib`.
+You may add your own references to `ref.bib`.
 
 ## Updating the template
 
-To update to the latest version of the LaTeX template
-in an already existing repository using the template,
-run the following:
+To update to the latest version of the LaTeX template and ART references
+in an already existing repository using the template, run the following:
 
 ```
 make update-template
