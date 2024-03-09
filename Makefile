@@ -74,5 +74,7 @@ update-template:
 
 update-template-old: update-template
 	$(SED) -i 's/[0-9]\+pt, *\(% *8-20pt *possible.*\)\?/a4paper,/' main.tex || true
+	$(SED) -i 's/\\begin{tabular}/\\centerline{\\begin{tabular}/' main.tex || true
+	$(SED) -i 's/\\end{tabular}/\\end{tabular}}/' main.tex || true
 	git add Makefile latexmkrc templates
 	test -f art.cls && git rm -f art.cls || true
