@@ -73,7 +73,7 @@ update-template:
 	curl -sL https://github.com/anoma/art-template/tarball/main \
 		| gunzip -c | $(TAR) xv --strip-components=1 \
 		--wildcards '*/.gitignore' '*/Makefile' '*/latexmkrc' '*/art.bib' '*/templates' '*/bin'
-	git add .gitignore Makefile latexmkrc art.bib templates bin
+	git add -f .gitignore Makefile latexmkrc art.bib templates bin
 
 update-template-old: update-template
 	bin/fix.sh opts-paper-font main.tex
