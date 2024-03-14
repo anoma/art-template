@@ -35,6 +35,7 @@
 \toggletrue{bibconfig}
 \newtoggle{bibstyle}              % no bibliography style
 \toggletrue{bibstyle}
+\newtoggle{easyreview}
 
 % Option for type of article
 \newcommand{\arttype}{ARTICLE}
@@ -87,9 +88,15 @@
 % Option for debugging format
 \DeclareOption{debug}{\toggletrue{debug}}
 
+\DeclareOption{easyreview}{\toggletrue{easyreview}}
+
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}  % pass other options to base class
 \ProcessOptions*\relax                                            % finish options
 \LoadClass[12pt]{extarticle}
+
+\iftoggle{easyreview}{
+  \RequirePackage{easyReview}
+}
 
 % Global settings for SI format
 
@@ -135,7 +142,8 @@
 \newcommand{\monofontscale}{0.94}
 }
 
-\usepackage{iftex}
+\RequirePackage{iftex}
+
 \ifPDFTeX
   \RequirePackage[LGR,TS1,T1]{fontenc}
   \RequirePackage[utf8]{inputenc}
