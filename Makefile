@@ -69,8 +69,11 @@ clean-latex:
 
 clean: clean-pandoc clean-latex
 
+update-bib:
+	curl -fLO https://art.anoma.net/art.bib
+
 update-template:
-	curl -sL https://github.com/anoma/art-template/tarball/main \
+	curl -fsL https://github.com/anoma/art-template/tarball/main \
 		| gunzip -c | $(TAR) xv --strip-components=1 \
 		--wildcards '*/.gitignore' '*/Makefile' '*/latexmkrc' '*/art.bib' '*/templates' '*/bin'
 	git add -f .gitignore Makefile latexmkrc art.bib templates bin
