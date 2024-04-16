@@ -1,6 +1,7 @@
 %--------------------------------------------------------------------------
 % Anoma Research Topics template v1.0
-% By Jonathan Prieto-Cubides and GitHub contributors
+% By Jonathan Prieto-Cubides, TG × ⊙, Tobias Heindel, and 
+% GitHub contributors seen at https://github.com/anoma/art-template.
 % Template based on pi-article.cls v4.0, extarticle, and CPU-msc template.
 %--------------------------------------------------------------------------
 
@@ -36,6 +37,8 @@
 \newtoggle{bibstyle}              % no bibliography style
 \toggletrue{bibstyle}
 \newtoggle{easyreview}
+\newtoggle{anonymous}              % anonymous submission
+\togglefalse{anonymous}
 
 % Option for type of article
 \newcommand{\arttype}{ARTICLE}
@@ -90,6 +93,14 @@
 
 \DeclareOption{easyreview}{\toggletrue{easyreview}}
 
+\DeclareOption{anonymous}{%
+  \typeout{Using the anonymous option}
+  \toggletrue{anonymous}
+  \togglefalse{history}
+  \togglefalse{toc}
+}
+
+
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}  % pass other options to base class
 \ProcessOptions*\relax                                            % finish options
 \LoadClass[12pt]{extarticle}
@@ -130,6 +141,18 @@
 \newcommand{\footnotefont}{\normalfont\fontsize{10pt}{11pt}\selectfont}
 \newcommand{\monofontscale}{0.94}
 }{%
+\iftoggle{anonymous}{%
+\newcommand{\headerfont}{\color{gray}\bfseries\fontsize{12.6pt}{12.6pt}\selectfont}
+\newcommand{\footerfont}{\normalfont\fontsize{9pt}{9.9pt}\selectfont}
+\newcommand{\titlefont}{\bfseries\fontsize{18pt}{19.8pt}\selectfont}
+\newcommand{\subtitlefont}{\bfseries\fontsize{13.5pt}{16.2pt}\selectfont}
+\newcommand{\artypefont}{\bfseries\fontsize{6.3pt}{8.1pt}\selectfont}
+\newcommand{\contactfont}{\itshape\fontsize{9pt}{9.9pt}\selectfont}
+\newcommand{\absfont}{\normalfont\fontsize{9pt}{9.9pt}\selectfont}
+\newcommand{\keywordsfont}{\normalfont\fontsize{9pt}{9.9pt}\selectfont}
+\newcommand{\footnotefont}{\normalfont\fontsize{9pt}{9.9pt}\selectfont}
+\newcommand{\monofontscale}{0.846} % 0.94 * 0.9 = 0.846
+}{
 \newcommand{\headerfont}{\color{gray}\bfseries\fontsize{16pt}{20pt}\selectfont}
 \newcommand{\footerfont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
 \newcommand{\titlefont}{\bfseries\fontsize{22pt}{24pt}\selectfont}
@@ -140,6 +163,7 @@
 \newcommand{\keywordsfont}{\normalfont\fontsize{8pt}{11pt}\selectfont}
 \newcommand{\footnotefont}{\normalfont\fontsize{7pt}{9pt}\selectfont}
 \newcommand{\monofontscale}{0.94}
+}
 }
 
 \RequirePackage{iftex}
@@ -253,7 +277,6 @@
 \RequirePackage[
 %letterpaper,
   includeheadfoot,                    % paper size, head/foot included in geometry
-  headheight=26pt,includeheadfoot,            % header height
   top=3cm,bottom=3cm,                       % top/bottom
   left=4cm,right=4cm,                       % left/right
   marginparwidth=2cm,                         % margins (used for line numbers)
@@ -262,6 +285,19 @@
   headsep=20pt,                               % text distance from header
   footskip=25pt
 ]{geometry}
+
+\iftoggle{anonymous}{ 
+\geometry{
+  top=2.5cm,   
+  bottom=2.3cm, 
+  left=3cm,  
+  right=3cm, 
+  headsep=0pt, 
+  headheight=0pt, 
+  footskip=19pt, 
+  marginparwidth=1.5cm, 
+}
+}{}
 
 \iftoggle{twocolumn}{                         % smaller margins if two-column
 \geometry{
@@ -595,8 +631,8 @@ tabsize=2
 x}
 
 %% Article meta data additional fields
-\newcommand{\pubdoi}[1]{\def\@pubdoi{#1}}
-\newcommand{\pubdate}[1]{\def\@pubdate{#1}}
+\newcommand{\pubdoi}[1]{\iftoggle{anonymous}{}{\def\@pubdoi{#1}}}
+\newcommand{\pubdate}[1]{\iftoggle{anonymous}{}{\def\@pubdate{#1}}}
 
 \iftoggle{history}{%
 \newcommand{\history}[1]{\def\@history{#1}}%
@@ -624,66 +660,70 @@ x}
 
 %% Fancyhdr styling
 \RequirePackage{fancyhdr}  % custom headers/footers
-\pagestyle{fancy}          % Set all pagestyle to fancy
-
-% Clear everything
 \fancyhf{}
 
-% Headers
-\renewcommand{\headrulewidth}{0pt}                                      % No header rule normally
+\iftoggle{anonymous}{%
+}{%
+  \pagestyle{fancy}          % Set all pagestyle to fancy
+  % Clear everything
 
-% Footers
-\renewcommand{\footrulewidth}{0pt}                                      % No footer rule normally
-\fancyfoot[R]{%                                                         % footer right side
-  \iftoggle{SI}{
-    \footerfont\textit{Supplementary Information}\hspace{7pt}|%         % we add SI as text
-  }{
-    \iftoggle{footpreprint}{
-      \footerfont\href{http://art.anoma.net}{Anoma Research Topics}\hspace{7pt}|% % we add preprint text
-    }{}
-  }
-  \iftoggle{footdate}{
-    \hspace{7pt}\textbf{\@ifundefined{@pubdate}{\today}{\@pubdate}}\hspace{7pt}|% % add date
-  }{}
-  \hspace{7pt}\textbf{\thepage}}                                        % add page number
-\fancyfoot[L]{%                                                         % footer left side
-  \footerfont\@ifundefined{@pubdoi}{}{%
-      \href{https://dx.doi.org/\@pubdoi}{DOI: \@pubdoi}}                % add DOI + hyperlink
-% \footerfont\@ifundefined{@leadauthor}{}{\@leadauthor}%                  % lead author name
-% \ifnum \value{authors} > 1\textit{ et al.}\fi%                          % and et.al.
-}
+  % Headers
+  \renewcommand{\headrulewidth}{0pt}                                      % No header rule normally
 
-% Modifying the plain style (applied automatically with title page)
-\fancypagestyle{plain}{%
-    \fancyhf{}                                                          % clear everything
-    \iftoggle{toprule}{%                                                % if SI, we add a top rule
-        \fancyhead[L]{%
-        $\vcenter{\hbox{{%
-        \includegraphics[height=20pt]{anoma-logo.pdf}%
-      }}}%
-      \vcenter{%
-        {\Large
-        \href{https://art.anoma.net}{Anoma Research Topics}} | \textsf{\arttype{}}
-      }$
-      % \hrule
-      }                            % article type
-        % \\                                             % Add article type and rule
-          % \colorbox{black}{\parbox{18em}{\centering\color{white}\subtitlefont{\arttype}}}}
-    }{}
-    \fancyfoot[R]{                                                      % footer right side
+  \renewcommand{\footrulewidth}{0pt}                                      % No footer rule normally
+  % Footers
+  \fancyfoot[R]{%                                                         % footer right side
     \iftoggle{SI}{
-      \footerfont\textit{Supplementary Information}\hspace{7pt}|%       % we add SI as text
+      \footerfont\textit{Supplementary Information}\hspace{7pt}|%         % we add SI as text
     }{
       \iftoggle{footpreprint}{
-        \footerfont\textit{Anoma Research Topics}\hspace{7pt}|%                      % we add preprint text
+        \footerfont\href{http://art.anoma.net}{Anoma Research Topics}\hspace{7pt}|% % we add preprint text
       }{}
     }
     \iftoggle{footdate}{
       \hspace{7pt}\textbf{\@ifundefined{@pubdate}{\today}{\@pubdate}}\hspace{7pt}|% % add date
     }{}
-      \hspace{7pt}\textbf{\thepage\textendash\pageref{LastPage}}}       % add page number
-    \fancyfoot[L]{\footerfont\@ifundefined{@pubdoi}{}{%                 % footer left side
-      \href{https://dx.doi.org/\@pubdoi}{DOI: \@pubdoi}}}               % add DOI + hyperlink
+    \hspace{7pt}\textbf{\thepage}}                                        % add page number
+  \fancyfoot[L]{%                                                         % footer left side
+    \footerfont\@ifundefined{@pubdoi}{}{%
+        \href{https://dx.doi.org/\@pubdoi}{DOI: \@pubdoi}}                % add DOI + hyperlink
+  % \footerfont\@ifundefined{@leadauthor}{}{\@leadauthor}%                  % lead author name
+  % \ifnum \value{authors} > 1\textit{ et al.}\fi%                          % and et.al.
+  }
+
+  % Modifying the plain style (applied automatically with title page)
+  \fancypagestyle{plain}{%
+      \fancyhf{}                                                          % clear everything
+      \iftoggle{toprule}{%                                                % if SI, we add a top rule
+          \fancyhead[L]{%
+          $\vcenter{\hbox{{%
+          \includegraphics[height=20pt]{anoma-logo.pdf}%
+        }}}%
+        \vcenter{%
+          {\Large
+          \href{https://art.anoma.net}{Anoma Research Topics}} | \textsf{\arttype{}}
+        }$
+        % \hrule
+        }                            % article type
+          % \\                                             % Add article type and rule
+            % \colorbox{black}{\parbox{18em}{\centering\color{white}\subtitlefont{\arttype}}}}
+      }{}
+      \fancyfoot[R]{                                                      % footer right side
+      \iftoggle{SI}{
+        \footerfont\textit{Supplementary Information}\hspace{7pt}|%       % we add SI as text
+      }{
+        \iftoggle{footpreprint}{
+          \footerfont\textit{Anoma Research Topics}\hspace{7pt}|%                      % we add preprint text
+        }{}
+      }
+      \iftoggle{footdate}{
+        \hspace{7pt}\textbf{\@ifundefined{@pubdate}{\today}{\@pubdate}}\hspace{7pt}|% % add date
+      }{}
+        \hspace{7pt}\textbf{\thepage\textendash\pageref{LastPage}}}       % add page number
+      \fancyfoot[L]{\footerfont\@ifundefined{@pubdoi}{}{%                 % footer left side
+        \href{https://dx.doi.org/\@pubdoi}{DOI: \@pubdoi}}}               % add DOI + hyperlink
+
+      }
 }
 
 % Line numbers
@@ -881,6 +921,24 @@ x}
 
 %%%% Custom title page
 \renewcommand{\@maketitle}{%
+\iftoggle{anonymous}{%
+  \begin{center}
+    {\titlefont \@title\par}
+    \vskip10pt
+    \textit{Anonymous Authors}\par
+    \vsapce{10pt}
+    % the date
+    \@ifundefined{@pubdate}{\today}{%
+      \textbf{\@pubdate}\par
+    }
+    \vskip13pt
+    {\textbf{Abstract}\par}
+    \vskip5pt
+    % \abstractBox{
+      \abscontent{}
+      % }{absshadecolor}
+  \end{center}
+}{%
 \iftoggle{shortintro}
 {% if short intro i.e. SI
   % patch author command to center section
@@ -932,7 +990,7 @@ x}
   \noindent % This is to remove indentation of minipage
   \vskip5pt%
   \iftoggle{toc}{%
-  \tableofcontents
+    \tableofcontents
   }{}
 }%
 \noindent
@@ -945,3 +1003,4 @@ x}
 }%
 \@ifundefined{vert@adjust}{}{\vskip\vert@adjust}%
 }%
+}
