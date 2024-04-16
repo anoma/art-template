@@ -31,6 +31,9 @@ make sure to also include `templates/pandoc.tex`.
 
 - paper size: `a4paper` or `letterpaper` (must be present)
 - add line numbers: `lineno` (optional)
+- no date: `nodate` (optional)
+- no authors: `noauthors` (optional)
+- toc: `toc` (optional)
 - document type:
   - `article`: Article (default)
   - `techreport`: Technical Report

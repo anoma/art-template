@@ -39,6 +39,12 @@
 \newtoggle{easyreview}
 \newtoggle{anonymous}              % anonymous submission
 \togglefalse{anonymous}
+\newtoggle{noauthors}              % no authors
+\togglefalse{noauthors}
+\newtoggle{nodate}                 % no date
+\togglefalse{nodate}
+
+
 
 % Option for type of article
 \newcommand{\arttype}{ARTICLE}
@@ -48,6 +54,9 @@
 \DeclareOption{persp}{\renewcommand{\arttype}{PERSPECTIVE}}
 \DeclareOption{nohistory}{\togglefalse{history}}
 \DeclareOption{toc}{\toggletrue{toc}}
+
+\DeclareOption{noauthors}{\toggletrue{noauthors}}
+\DeclareOption{nodate}{\toggletrue{nodate}}
 
 \DeclareOption{conference}{%
 \renewcommand{\arttype}{CONFERENCE ARTICLE}%
@@ -925,11 +934,15 @@ x}
   \begin{center}
     {\titlefont \@title\par}
     \vskip10pt
+    \iftoggle{noauthors}{}{%
     \textit{Anonymous Authors}\par
     \vspace{10pt}
+    }
     % the date
-    {\@ifundefined{@pubdate}{\today}{\@pubdate}}
+    \iftoggle{nodate}{}{%
+    \@ifundefined{@pubdate}{\today}{\@pubdate}
     \vskip13pt
+    }
     {\textbf{Abstract}\par}
     \vskip5pt
     % \abstractBox{
@@ -974,14 +987,17 @@ x}
   \vskip10pt
   %
   % author names / addresses
-  \raggedright\authaffil{}
-  %
-  \vskip3pt
-  %
-  % equal contribution
-  \raggedright\equalcontribswitch{}
-  % corresponding email
-  \raggedright\contactswitch{}
+  \iftoggle{noauthors}{%
+  }{
+    \raggedright\authaffil{}
+    %
+    \vskip3pt
+    %
+    % equal contribution
+    \raggedright\equalcontribswitch{}
+    % corresponding email
+    \raggedright\contactswitch{}
+  }
   % abstract / TOC section
   \raggedright{
   \abstractBox{\abscontent{}}{absshadecolor}}
