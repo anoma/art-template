@@ -926,11 +926,9 @@ x}
     {\titlefont \@title\par}
     \vskip10pt
     \textit{Anonymous Authors}\par
-    \vsapce{10pt}
+    \vspace{10pt}
     % the date
-    \@ifundefined{@pubdate}{\today}{%
-      \textbf{\@pubdate}\par
-    }
+    {\@ifundefined{@pubdate}{\today}{\@pubdate}}
     \vskip13pt
     {\textbf{Abstract}\par}
     \vskip5pt
