@@ -38,6 +38,7 @@ make sure to also include `templates/pandoc.tex`.
   - `commun`: Communication
   - `persp`: Perspective
   - `review`: Review
+  - `anonymous`: Article (without metadata)
 
 ### Tables & figures
 
