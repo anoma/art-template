@@ -208,20 +208,23 @@ A solution to the graph coloring problem is then an assignment of colors that sa
 
 \begin{table*}[!h]
 \begin{center}
-\begin{tabular}{|p{1.5cm}|p{13cm}|}
-\hline
- \textbf{Role} & \textbf{Description} \\ \hline
- Authorizer & approves the resource consumption on the application level. The resource logic encodes the mechanism that connects the authorizer's external identity (public key) to the decision-making process \\ \hline
- Annuler & knows the data required to nullify a resource
- \\ \hline
-Creator & creates the resource and shares the data with the receiver
-\\ \hline
-Owner & can both authorize and annul a resource
-\\ \hline
-Sender & owns the resources that were consumed to create the created resource
-\\ \hline
-Receiver & owns the created resource
-\\ \hline
+\begin{tabular}{p{1.5cm}p{13cm}}
+\toprule
+  \textbf{Role} & \textbf{Description} \\
+\midrule
+  Authorizer & approves the resource consumption on the application level. The resource logic encodes the mechanism that connects the authorizer's external identity (public key) to the decision-making process 
+  \\
+  Annuler & knows the data required to nullify a resource
+  \\
+  Creator & creates the resource and shares the data with the receiver
+  \\
+  Owner & can both authorize and annul a resource
+  \\
+  Sender & owns the resources that were consumed to create the created resource
+  \\
+  Receiver & owns the created resource
+  \\
+\bottomrule
 \end{tabular}
 \caption{Resource-related roles.}
 \end{center}
