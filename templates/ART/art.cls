@@ -371,6 +371,7 @@ fit,                         % TIKZ fitting
 
 % Tables
 \RequirePackage{
+  threeparttable,                             % clean separators (with '\toprule', '\midrule', '\bottomrule')
   booktabs,                                   % overall nice table quality
   array,                                      % better column and row definitions
   longtable,                                  % for tables spanning multiple pages
