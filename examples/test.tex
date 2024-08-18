@@ -34,8 +34,8 @@ slightly different when set in display style. (See next section).
 
 A numbered display equation---one set off by vertical space from the
 text and centered horizontally---is produced by the \textbf{equation}
-environment. An unnumbered display equation is produced by the
-\textbf{displaymath} environment.
+environment. The
+\textbf{displaymath} environment produces an unnumbered display equation.
 
 Again, in either environment, you can use any of the symbols and
 structures available in \LaTeX@; this section will just give a couple of
@@ -87,9 +87,9 @@ examples of display equations in context. First, consider
 
 \section{Math Tests}
 
-\begin{definition}[name={Heterogeneous Validity \protect\citep{anoma-taiga}}, label={def:het-valid}]
+\begin{definition}[name={Heterogeneous Validity \protect\citep{art-2024-heterogeneous-paxos-20-specs}}, label={def:het-valid}]
     A consensus execution\todo{take Guerraoui definition for what an execution is}
-    is \emph{valid} if all  decided values were proposed in that execution.
+    is \emph{valid} if all decided values were proposed in that execution.
     A consensus protocol is \emph{valid} if all possible executions are valid.
 \end{definition}
 
@@ -124,7 +124,9 @@ $$
 $$
 
 
-Note: If $\beta \in \Gamma$, then the form is undefined at the points in $S \cap \Gamma$, and the integral $l_l\left(i_1\right)$ diverges as $\varepsilon \rightarrow 0$. This pathological behavior can be handled by taking $\Gamma \subseteq S$.
+\begin{remark}
+    If $\beta \in \Gamma$, then the form is undefined at the points in $S \cap \Gamma$, and the integral $l_l\left(i_1\right)$ diverges as $\varepsilon \rightarrow 0$. This pathological behavior can be handled by taking $\Gamma \subseteq S$.
+\end{remark}
 
 \iftoggle{test-minted}{
 {
