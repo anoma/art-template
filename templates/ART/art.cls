@@ -278,7 +278,7 @@
 \RequirePackage{proof}
 
 % For listings
-\RequirePackage{minted}
+\RequirePackage[outputdir=output]{minted}
 
 
 % General pagination setup and tools
