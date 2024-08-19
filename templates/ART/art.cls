@@ -43,8 +43,8 @@
 \togglefalse{noauthors}
 \newtoggle{nodate}                 % no date
 \togglefalse{nodate}
-
-
+\newtoggle{draft}                  % draft mode
+\togglefalse{draft}
 
 % Option for type of article
 \newcommand{\arttype}{ARTICLE}
@@ -54,6 +54,7 @@
 \DeclareOption{persp}{\renewcommand{\arttype}{PERSPECTIVE}}
 \DeclareOption{nohistory}{\togglefalse{history}}
 \DeclareOption{toc}{\toggletrue{toc}}
+\DeclareOption{draft}{\toggletrue{draft}}
 
 \DeclareOption{noauthors}{\toggletrue{noauthors}}
 \DeclareOption{nodate}{\toggletrue{nodate}}
@@ -279,7 +280,7 @@
 
 % For listings
 \RequirePackage[outputdir=output]{minted}
-
+% outputdir=build for minted
 
 % General pagination setup and tools
 
@@ -456,7 +457,17 @@ fit,                         % TIKZ fitting
 \RequirePackage{lipsum}
 
 % Todo notes
-\RequirePackage{todonotes}
+\iftoggle{draft}{
+\RequirePackage[
+  color=lightgray!10,
+  linecolor=lightgray,
+]{todonotes}
+}{
+\RequirePackage[
+  disable,
+]{todonotes}
+}
+
 
 % Science-related packages
 
