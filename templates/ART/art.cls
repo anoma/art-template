@@ -503,7 +503,7 @@ fit,                         % TIKZ fitting
 
 \iftoggle{bibstyle}{
 %\bibliographystyle{unsrtnat}
-\bibliographystyle{alpha}
+\bibliographystyle{alphaurl}
 %\bibliographystyle{apalike}
 %\bibliographystyle{ACM-Reference-Format}
 }{}
