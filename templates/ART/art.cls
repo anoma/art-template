@@ -1,12 +1,12 @@
 %--------------------------------------------------------------------------
-% Anoma Research Topics template v1.0
+% Anoma Research Topics template
 % By Jonathan Prieto-Cubides, TG × ⊙, Tobias Heindel, and 
 % GitHub contributors seen at https://github.com/anoma/art-template.
 % Template based on pi-article.cls v4.0, extarticle, and CPU-msc template.
 %--------------------------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{art}[19/08/2023, v1.1]
+\ProvidesClass{art}[23/08/2024, v1.1]
 \RequirePackage{etoolbox}         % a necessity
 
 % Class options and conditionals
