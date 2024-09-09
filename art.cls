@@ -1,0 +1,1 @@
+templates/ART/art.cls
