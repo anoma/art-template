@@ -18,6 +18,10 @@ LATEXMK_OPTS ?= -pdf -shell-escape -$(LATEXMK_TEXENGINE) -synctex=1 -output-dire
 
 MKPDF ?= $(LATEXMK) $(LATEXMK_OPTS)
 
+all: pdf
+
+pdf: xelatex
+
 .PHONY: xelatex
 xelatex: LATEXMK_TEXENGINE:=xelatex
 xelatex: main
@@ -29,11 +33,8 @@ lualatex: main
 .PHONY: pdflatex
 pdflatex: LATEXMK_TEXENGINE:=pdflatex
 pdflatex: main
-	@echo "We recommend using xelatex or lualatex instead of pdflatex."
-
-all: pdf
-
-pdf: xelatex
+	@echo "WARNING: pdfTeX is not supported, only for local preview purposes."
+	@echo "         It produces slightly different output than XeLaTeX, which is used for publishing."
 
 watch: main
 	if which inotifywait 2>/dev/null; then \
@@ -41,7 +42,7 @@ watch: main
 	else if which fswatch 2>/dev/null; then \
 	  fswatch $(TEX) $(CLS) $(STY) $(MD) $(ORG) | (while read; do echo make main; done); \
 	fi; else
-	  echo "Missing inotifywait (Linux) or fswatch (Mac)"
+	  @echo "ERROR: Missing inotifywait (Linux) or fswatch (Mac)."
 	fi
 
 main: $(OUT)/main.pdf
