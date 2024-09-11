@@ -14,7 +14,7 @@ OUT ?= output
 
 LATEXMK ?= latexmk
 LATEXMK_TEXENGINE ?= xelatex
-LATEXMK_OPTS ?= -pdf -shell-escape -$(LATEXMK_TEXENGINE) -output-directory=$(OUT)
+LATEXMK_OPTS ?= -pdf -shell-escape -$(LATEXMK_TEXENGINE) -synctex=1 -output-directory=$(OUT)
 
 MKPDF ?= $(LATEXMK) $(LATEXMK_OPTS)
 
@@ -36,7 +36,13 @@ all: pdf
 pdf: xelatex
 
 watch: main
-	while inotifywait -qe modify $(TEX) $(CLS) $(STY) $(MD) $(ORG); do make main; done
+	if which inotifywait 2>/dev/null; then \
+	  while inotifywait -qe modify $(TEX) $(CLS) $(STY) $(MD) $(ORG); do echo make main; done; \
+	else if which fswatch 2>/dev/null; then \
+	  fswatch $(TEX) $(CLS) $(STY) $(MD) $(ORG) | (while read; do echo make main; done); \
+	fi; else
+	  echo "Missing inotifywait (Linux) or fswatch (Mac)"
+	fi
 
 main: $(OUT)/main.pdf
 
@@ -67,7 +73,10 @@ clean-pandoc:
 clean-latex:
 	rm -f $(OUT)/main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk}
 
-clean: clean-pandoc clean-latex
+clean-pdf:
+	rm -f $(OUT)/main.pdf
+
+clean: clean-pandoc clean-latex clean-pdf
 
 update-bib:
 	curl -fLO https://art.anoma.net/art.bib
