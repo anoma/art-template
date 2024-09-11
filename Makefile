@@ -10,7 +10,7 @@ ORG_TEX := $(patsubst %.org,%.org.tex,$(ORG))
 SED ?= $(shell which gsed 2>/dev/null || which sed)
 TAR ?= $(shell which gtar 2>/dev/null || which tar)
 
-OUT ?= output
+OUT ?= .
 
 LATEXMK ?= latexmk
 LATEXMK_TEXENGINE ?= xelatex
