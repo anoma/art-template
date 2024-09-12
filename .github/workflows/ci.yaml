@@ -11,6 +11,8 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         texlive: [2023, 2024]
     runs-on: ${{ matrix.os }}
+    env:
+      LATEX_ARGS: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
@@ -23,6 +25,7 @@ jobs:
           root_file: main.tex
           post_compile: "latexmk -c"
           continue_on_error: false
+          args: ${{ env.LATEX_ARGS }}
           
       - uses: xu-cheng/latex-action@v3
         with:
@@ -31,6 +34,7 @@ jobs:
           latexmk_use_xelatex: true
           post_compile: "latexmk -c"
           continue_on_error: false
+          args: ${{ env.LATEX_ARGS }}
       
       - uses: xu-cheng/latex-action@v3
         with:
@@ -39,6 +43,7 @@ jobs:
           latexmk_shell_escape: true
           post_compile: "latexmk -c"
           continue_on_error: false
+          args: ${{ env.LATEX_ARGS }}
 
       - uses: xu-cheng/latex-action@v3
         with:
@@ -47,6 +52,7 @@ jobs:
           latexmk_use_lualatex: true
           post_compile: "latexmk -c"
           continue_on_error: false
+          args: ${{ env.LATEX_ARGS }}
 
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
