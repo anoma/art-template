@@ -14,7 +14,7 @@ OUT ?= .
 
 LATEXMK ?= latexmk
 LATEXMK_TEXENGINE ?= xelatex
-LATEXMK_OPTS ?= -pdf -shell-escape -$(LATEXMK_TEXENGINE) -synctex=1 -output-directory=$(OUT)
+LATEXMK_OPTS ?= -pdf -$(LATEXMK_TEXENGINE)
 
 MKPDF ?= $(LATEXMK) $(LATEXMK_OPTS)
 
@@ -34,7 +34,7 @@ lualatex: main
 pdflatex: LATEXMK_TEXENGINE:=pdflatex
 pdflatex: main
 	@echo "WARNING: pdfTeX is not supported, only for local preview purposes."
-	@echo "         It produces slightly different output than XeLaTeX, which is used for publishing."
+	@echo "         It produces slightly different output than XeTeX, which is used for publishing."
 
 watch: main
 	if which inotifywait 2>/dev/null; then \
@@ -72,7 +72,7 @@ clean-pandoc:
 	rm -f $(MD_TEX) $(ORG_TEX)
 
 clean-latex:
-	rm -f $(OUT)/main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk}
+	rm -f $(OUT)/main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk,synctex,synctex.gz}
 
 clean-pdf:
 	rm -f $(OUT)/main.pdf
