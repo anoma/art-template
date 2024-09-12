@@ -16,18 +16,8 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
-
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v3
-        with:
-          # texlive_version: ${{ matrix.texlive }}
-          # pre_compile: "tlmgr update --self && tlmgr update --all"
-          root_file: main.tex
-          # post_compile: "latexmk -c main.tex"
-          # continue_on_error: false
-          # args: ${{ env.LATEX_ARGS }}
-          
-      - uses: xu-cheng/latex-action@v3
+      - name: XeLaTeX
+        uses: jonaprieto/latex-action@v3
         with:
           texlive_version: ${{ matrix.texlive }}
           root_file: main.tex
@@ -36,16 +26,14 @@ jobs:
           continue_on_error: false
           args: ${{ env.LATEX_ARGS }}
       
-      - uses: xu-cheng/latex-action@v3
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v4
         with:
-          texlive_version: ${{ matrix.texlive }}
-          root_file: main.tex
-          latexmk_shell_escape: true
-          post_compile: "latexmk -c"
-          continue_on_error: false
-          args: ${{ env.LATEX_ARGS }}
+          name: PDF-${{ matrix.os }}-texlive-${{ matrix.texlive }}
+          path: main.pdf
 
-      - uses: xu-cheng/latex-action@v3
+      - name: LuaLaTeX
+        uses: jonaprieto/latex-action@v3
         with:
           texlive_version: ${{ matrix.texlive }}
           root_file: main.tex
@@ -54,11 +42,14 @@ jobs:
           continue_on_error: false
           args: ${{ env.LATEX_ARGS }}
 
-      - name: Upload PDF file
-        uses: actions/upload-artifact@v4
+      - name: PdfLaTeX
+        uses: jonaprieto/latex-action@v3
         with:
-          name: PDF-${{ matrix.os }}-texlive-${{ matrix.texlive }}
-          path: main.pdf
+          texlive_version: ${{ matrix.texlive }}
+          root_file: main.tex
+          post_compile: "latexmk -c main.tex"
+          continue_on_error: false
+          args: ${{ env.LATEX_ARGS }}
 
       - id: get_version
         run:  echo "version=$(cat .version)" >> $GITHUB_OUTPUT
