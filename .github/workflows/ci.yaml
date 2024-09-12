@@ -7,8 +7,9 @@ on:
 jobs:
   build_latex:
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
         texlive: [2023, 2024]
     runs-on: ${{ matrix.os }}
     env:
