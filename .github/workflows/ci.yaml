@@ -1,18 +1,24 @@
 name: Build LaTeX document
-on: [push]
+on:
+  push:
+  schedule:
+    - cron: '0 2 * * *'  # Run every day at 2 AM UTC
+
 jobs:
   build_latex:
-    runs-on: ubuntu-latest
-    matrix:
-      texlive: [2021, 2022, 2023, 2024]
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        texlive: [2023, 2024]
+    runs-on: ${{ matrix.os }}
     steps:
-
       - name: Set up Git repository
         uses: actions/checkout@v4
 
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
+          texlive_version: ${{ matrix.texlive }}
           pre_compile: "tlmgr update --self && tlmgr update --all"
           root_file: main.tex
           post_compile: "latexmk -c"
@@ -20,6 +26,7 @@ jobs:
           
       - uses: xu-cheng/latex-action@v3
         with:
+          texlive_version: ${{ matrix.texlive }}
           root_file: main.tex
           latexmk_use_xelatex: true
           post_compile: "latexmk -c"
@@ -27,6 +34,7 @@ jobs:
       
       - uses: xu-cheng/latex-action@v3
         with:
+          texlive_version: ${{ matrix.texlive }}
           root_file: main.tex
           latexmk_shell_escape: true
           post_compile: "latexmk -c"
@@ -34,6 +42,7 @@ jobs:
 
       - uses: xu-cheng/latex-action@v3
         with:
+          texlive_version: ${{ matrix.texlive }}
           root_file: main.tex
           latexmk_use_lualatex: true
           post_compile: "latexmk -c"
@@ -42,12 +51,11 @@ jobs:
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:
-          name: PDF
+          name: PDF-${{ matrix.os }}-texlive-${{ matrix.texlive }}
           path: main.pdf
 
       - id: get_version
         run:  echo "version=$(cat .version)" >> $GITHUB_OUTPUT
-
           
       - name: Create GitHub Release
         if: github.event_name == 'push' && contains(github.event.head_commit.message, 'Merge pull request')
@@ -56,4 +64,3 @@ jobs:
           tag_name: ${{ steps.get_version.outputs.version }}
           release_name: Release ${{ steps.get_version.outputs.version }}
           files: main.pdf
-          
