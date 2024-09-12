@@ -20,12 +20,12 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          texlive_version: ${{ matrix.texlive }}
-          pre_compile: "tlmgr update --self && tlmgr update --all"
+          # texlive_version: ${{ matrix.texlive }}
+          # pre_compile: "tlmgr update --self && tlmgr update --all"
           root_file: main.tex
-          post_compile: "latexmk -c"
-          continue_on_error: false
-          args: ${{ env.LATEX_ARGS }}
+          # post_compile: "latexmk -c main.tex"
+          # continue_on_error: false
+          # args: ${{ env.LATEX_ARGS }}
           
       - uses: xu-cheng/latex-action@v3
         with:
