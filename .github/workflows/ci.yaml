@@ -18,7 +18,7 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v4
       - name: XeLaTeX
-        uses: jonaprieto/latex-action@v4
+        uses: xu-cheng/latex-action@v3
         with:
           texlive_version: ${{ matrix.texlive }}
           root_file: main.tex
@@ -34,7 +34,7 @@ jobs:
           path: main.pdf
 
       - name: LuaLaTeX
-        uses: jonaprieto/latex-action@v4
+        uses: xu-cheng/latex-action@v3
         with:
           texlive_version: ${{ matrix.texlive }}
           root_file: main.tex
@@ -44,7 +44,7 @@ jobs:
           args: ${{ env.LATEX_ARGS }}
 
       - name: PdfLaTeX
-        uses: jonaprieto/latex-action@v4
+        uses: xu-cheng/latex-action@v3
         with:
           texlive_version: ${{ matrix.texlive }}
           root_file: main.tex
