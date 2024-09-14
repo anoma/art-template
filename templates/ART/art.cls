@@ -603,7 +603,7 @@ framesep=4pt,%
 framerule=0pt%
 }
 
-\RequirePackage[]{minted}
+\@ifpackageloaded{minted}{
 \usemintedstyle{trac}
 \newminted[betterpython]{python}{%
 linenos=false,%
@@ -613,7 +613,7 @@ frame=leftline,%
 framerule=0.5pt,%
 framesep=2em,
 tabsize=2
-}
+}}{}
 
 %
 % Other Setup

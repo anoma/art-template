@@ -1,0 +1,30 @@
+\section{Source code}
+
+{\small
+\begin{minted}{python}
+def even_constraint(last_state, next_state_var, solver):
+    n = solver.IntVar(0, solver.infinity(), 'n_even')
+    b = solver.BoolVar('b_even')
+    solver.Add(next_state_var - 2 * n <= M * (1 - b))
+    solver.Add(next_state_var - 2 * n >= -M * (1 - b))
+    return [(b, 1)]
+\end{minted}
+}
+
+\begin{betterpython}
+def even_constraint(last_state, next_state_var, solver):
+    n = solver.IntVar(0, solver.infinity(), 'n_even')
+    b = solver.BoolVar('b_even')
+    solver.Add(next_state_var - 2 * n <= M * (1 - b))
+    solver.Add(next_state_var - 2 * n >= -M * (1 - b))
+    return [(b, 1)]
+\end{betterpython}
+
+\begin{lstlisting}{python}
+def odd_constraint(last_state, next_state_var, solver):
+    n = solver.IntVar(0, solver.infinity(), 'n_odd')
+    b = solver.BoolVar('b_odd')
+    solver.Add(next_state_var - 2 * n - 1 <= M * (1 - b))
+    solver.Add(next_state_var - 2 * n - 1 >= -M * (1 - b))
+    return [(b, 1)]
+\end{lstlisting}
