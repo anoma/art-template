@@ -37,13 +37,13 @@
 \newtoggle{bibstyle}              % no bibliography style
 \toggletrue{bibstyle}
 \newtoggle{easyreview}
-\newtoggle{anonymous}              % anonymous submission
+\newtoggle{anonymous}             % anonymous submission
 \togglefalse{anonymous}
-\newtoggle{noauthors}              % no authors
+\newtoggle{noauthors}             % no authors
 \togglefalse{noauthors}
-\newtoggle{nodate}                 % no date
+\newtoggle{nodate}                % no date
 \togglefalse{nodate}
-\newtoggle{draft}                  % draft mode
+\newtoggle{draft}                 % draft mode
 \togglefalse{draft}
 
 % Option for type of article
@@ -278,10 +278,6 @@
 \RequirePackage{bussproofs}
 \RequirePackage{proof}
 
-% For listings
-\RequirePackage[outputdir=output]{minted}
-% outputdir=build for minted
-
 % General pagination setup and tools
 
 \RequirePackage[
@@ -296,16 +292,16 @@
   footskip=25pt
 ]{geometry}
 
-\iftoggle{anonymous}{ 
+\iftoggle{anonymous}{
 \geometry{
-  top=2.5cm,   
-  bottom=2.3cm, 
-  left=3cm,  
-  right=3cm, 
-  headsep=0pt, 
-  headheight=0pt, 
-  footskip=19pt, 
-  marginparwidth=1.5cm, 
+  top=2.5cm,
+  bottom=2.3cm,
+  left=3cm,
+  right=3cm,
+  headsep=0pt,
+  headheight=0pt,
+  footskip=19pt,
+  marginparwidth=1.5cm,
 }
 }{}
 
@@ -597,8 +593,6 @@ fit,                         % TIKZ fitting
 
 % Nice typesetting of codeblocks
 
-
-
 \definecolor{light-gray}{gray}{0.95}
 \lstset{columns=fullflexible,%
 basicstyle=\ttfamily\footnotesize,%
@@ -608,6 +602,8 @@ frame=tlbr,%
 framesep=4pt,%
 framerule=0pt%
 }
+
+\@ifpackageloaded{minted}{
 \usemintedstyle{trac}
 \newminted[betterpython]{python}{%
 linenos=false,%
@@ -617,8 +613,7 @@ frame=leftline,%
 framerule=0.5pt,%
 framesep=2em,
 tabsize=2
-}
-
+}}{}
 
 %
 % Other Setup

@@ -10,13 +10,17 @@ ORG_TEX := $(patsubst %.org,%.org.tex,$(ORG))
 SED ?= $(shell which gsed 2>/dev/null || which sed)
 TAR ?= $(shell which gtar 2>/dev/null || which tar)
 
-OUT ?= output
+OUT ?= .
 
 LATEXMK ?= latexmk
 LATEXMK_TEXENGINE ?= xelatex
-LATEXMK_OPTS ?= -pdf -shell-escape -$(LATEXMK_TEXENGINE) -output-directory=$(OUT)
+LATEXMK_OPTS ?= -pdf -$(LATEXMK_TEXENGINE)
 
 MKPDF ?= $(LATEXMK) $(LATEXMK_OPTS)
+
+all: pdf
+
+pdf: xelatex
 
 .PHONY: xelatex
 xelatex: LATEXMK_TEXENGINE:=xelatex
@@ -29,14 +33,17 @@ lualatex: main
 .PHONY: pdflatex
 pdflatex: LATEXMK_TEXENGINE:=pdflatex
 pdflatex: main
-	@echo "We recommend using xelatex or lualatex instead of pdflatex."
-
-all: pdf
-
-pdf: xelatex
+	@echo "WARNING: pdfTeX is not supported, only for local preview purposes."
+	@echo "         It produces slightly different output than XeTeX, which is used for publishing."
 
 watch: main
-	while inotifywait -qe modify $(TEX) $(CLS) $(STY) $(MD) $(ORG); do make main; done
+	if which inotifywait 2>/dev/null; then \
+	  while inotifywait -qe modify $(TEX) $(CLS) $(STY) $(MD) $(ORG); do echo make main; done; \
+	else if which fswatch 2>/dev/null; then \
+	  fswatch $(TEX) $(CLS) $(STY) $(MD) $(ORG) | (while read; do echo make main; done); \
+	fi; else
+	  @echo "ERROR: Missing inotifywait (Linux) or fswatch (Mac)."
+	fi
 
 main: $(OUT)/main.pdf
 
@@ -65,9 +72,12 @@ clean-pandoc:
 	rm -f $(MD_TEX) $(ORG_TEX)
 
 clean-latex:
-	rm -f $(OUT)/main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk}
+	rm -f $(OUT)/main.{blg,bbl,brf,aux,out,fls,xdv,toc,log,fdb_latexmk,synctex,synctex.gz}
 
-clean: clean-pandoc clean-latex
+clean-pdf:
+	rm -f $(OUT)/main.pdf
+
+clean: clean-pandoc clean-latex clean-pdf
 
 update-bib:
 	curl -fLO https://art.anoma.net/art.bib
