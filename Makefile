@@ -85,8 +85,8 @@ update-bib:
 update-template:
 	curl -fsL https://github.com/anoma/art-template/tarball/main \
 		| gunzip -c | $(TAR) xv --strip-components=1 \
-		--wildcards '*/.gitignore' '*/Makefile' '*/latexmkrc' '*/art.bib' '*/templates' '*/bin'
-	git add -f .gitignore Makefile latexmkrc art.bib templates bin
+		--wildcards '*/.gitignore' '*/Makefile' '*/latexmkrc' '*/art.bib' '*/art.cls' '*/quiver.sty' '*/anoma-logo.pdf' '*/aux-preamble.tex' '*/templates' '*/bin'
+	git add -f .gitignore Makefile latexmkrc art.bib art.cls quiver.sty anoma-logo.pdf aux-preamble.tex templates bin
 
 update-template-old: update-template
 	bin/fix.sh opts-paper-font main.tex
